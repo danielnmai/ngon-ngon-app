@@ -1,35 +1,190 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import "@mantine/core/styles.css";
+import "./App.css";
+import "./components/Header";
+
+import { MantineProvider } from "@mantine/core";
+import { Header } from "./components/Header";
+import { Hero } from "./components/Hero";
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
+    <MantineProvider>
+      <Header />
+      <Hero />
+      <div className="main">
         <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
+          To be, or not to be: that is the question: whether 'tis nobler in the
+          mind to suffer the slings and arrows of outrageous fortune, or to take
+          arms against a sea of troubles, and by opposing end them? To die: to
+          sleep; no more; and, by a sleep to say we end the heart-ache and the
+          thousand natural shocks that flesh is heir to, 'tis a consummation
+          devoutly to be wish'd. To die, to sleep; to sleep: perchance to dream:
+          ay, there's the rub; for in that sleep of death what dreams may come
+          when we have shuffled off this mortal coil, must give us pause.
+          There's the respect that makes calamity of so long a life; for who
+          would bear the whips and scorns of time, the oppressor's wrong, the
+          proud man's contumely, the pangs of dispriz'd love, the law's delay,
+          the insolence of office, and the spurns that patient merit of the
+          unworthy takes, when he himself might his quietus make with a bare
+          bodkin? Who would fardels bear, to grunt and sweat under a weary life,
+          but that the dread of something after death, the undiscover'd country
+          from whose bourn no traveller returns, puzzles the will, and makes us
+          rather bear those ills we have, than fly to others that we know not
+          of? Thus consience doth make cowards of us all; and thus the native
+          hue of resolution is sicklied o'er with the pale cast of thought, and
+          enterprises of great pith and moment with this regard their currents
+          turn awry, and lose the name of action. To be, or not to be: that is
+          the question: whether 'tis nobler in the mind to suffer the slings and
+          arrows of outrageous fortune, or to take arms against a sea of
+          troubles, and by opposing end them? To die: to sleep; no more; and, by
+          a sleep to say we end the heart-ache and the thousand natural shocks
+          that flesh is heir to, 'tis a consummation devoutly to be wish'd. To
+          die, to sleep; to sleep: perchance to dream: ay, there's the rub; for
+          in that sleep of death what dreams may come when we have shuffled off
+          this mortal coil, must give us pause. There's the respect that makes
+          calamity of so long a life; for who would bear the whips and scorns of
+          time, the oppressor's wrong, the proud man's contumely, the pangs of
+          dispriz'd love, the law's delay, the insolence of office, and the
+          spurns that patient merit of the unworthy takes, when he himself might
+          his quietus make with a bare bodkin? Who would fardels bear, to grunt
+          and sweat under a weary life, but that the dread of something after
+          death, the undiscover'd country from whose bourn no traveller returns,
+          puzzles the will, and makes us rather bear those ills we have, than
+          fly to others that we know not of? Thus consience doth make cowards of
+          us all; and thus the native hue of resolution is sicklied o'er with
+          the pale cast of thought, and enterprises of great pith and moment
+          with this regard their currents turn awry, and lose the name of
+          action. To be, or not to be: that is the question: whether 'tis nobler
+          in the mind to suffer the slings and arrows of outrageous fortune, or
+          to take arms against a sea of troubles, and by opposing end them? To
+          die: to sleep; no more; and, by a sleep to say we end the heart-ache
+          and the thousand natural shocks that flesh is heir to, 'tis a
+          consummation devoutly to be wish'd. To die, to sleep; to sleep:
+          perchance to dream: ay, there's the rub; for in that sleep of death
+          what dreams may come when we have shuffled off this mortal coil, must
+          give us pause. There's the respect that makes calamity of so long a
+          life; for who would bear the whips and scorns of time, the oppressor's
+          wrong, the proud man's contumely, the pangs of dispriz'd love, the
+          law's delay, the insolence of office, and the spurns that patient
+          merit of the unworthy takes, when he himself might his quietus make
+          with a bare bodkin? Who would fardels bear, to grunt and sweat under a
+          weary life, but that the dread of something after death, the
+          undiscover'd country from whose bourn no traveller returns, puzzles
+          the will, and makes us rather bear those ills we have, than fly to
+          others that we know not of? Thus consience doth make cowards of us
+          all; and thus the native hue of resolution is sicklied o'er with the
+          pale cast of thought, and enterprises of great pith and moment with
+          this regard their currents turn awry, and lose the name of action. To
+          be, or not to be: that is the question: whether 'tis nobler in the
+          mind to suffer the slings and arrows of outrageous fortune, or to take
+          arms against a sea of troubles, and by opposing end them? To die: to
+          sleep; no more; and, by a sleep to say we end the heart-ache and the
+          thousand natural shocks that flesh is heir to, 'tis a consummation
+          devoutly to be wish'd. To die, to sleep; to sleep: perchance to dream:
+          ay, there's the rub; for in that sleep of death what dreams may come
+          when we have shuffled off this mortal coil, must give us pause.
+          There's the respect that makes calamity of so long a life; for who
+          would bear the whips and scorns of time, the oppressor's wrong, the
+          proud man's contumely, the pangs of dispriz'd love, the law's delay,
+          the insolence of office, and the spurns that patient merit of the
+          unworthy takes, when he himself might his quietus make with a bare
+          bodkin? Who would fardels bear, to grunt and sweat under a weary life,
+          but that the dread of something after death, the undiscover'd country
+          from whose bourn no traveller returns, puzzles the will, and makes us
+          rather bear those ills we have, than fly to others that we know not
+          of? Thus consience doth make cowards of us all; and thus the native
+          hue of resolution is sicklied o'er with the pale cast of thought, and
+          enterprises of great pith and moment with this regard their currents
+          turn awry, and lose the name of action.{" "}
+        </p>
+        <p>
+          To be, or not to be: that is the question: whether 'tis nobler in the
+          mind to suffer the slings and arrows of outrageous fortune, or to take
+          arms against a sea of troubles, and by opposing end them? To die: to
+          sleep; no more; and, by a sleep to say we end the heart-ache and the
+          thousand natural shocks that flesh is heir to, 'tis a consummation
+          devoutly to be wish'd. To die, to sleep; to sleep: perchance to dream:
+          ay, there's the rub; for in that sleep of death what dreams may come
+          when we have shuffled off this mortal coil, must give us pause.
+          There's the respect that makes calamity of so long a life; for who
+          would bear the whips and scorns of time, the oppressor's wrong, the
+          proud man's contumely, the pangs of dispriz'd love, the law's delay,
+          the insolence of office, and the spurns that patient merit of the
+          unworthy takes, when he himself might his quietus make with a bare
+          bodkin? Who would fardels bear, to grunt and sweat under a weary life,
+          but that the dread of something after death, the undiscover'd country
+          from whose bourn no traveller returns, puzzles the will, and makes us
+          rather bear those ills we have, than fly to others that we know not
+          of? Thus consience doth make cowards of us all; and thus the native
+          hue of resolution is sicklied o'er with the pale cast of thought, and
+          enterprises of great pith and moment with this regard their currents
+          turn awry, and lose the name of action. To be, or not to be: that is
+          the question: whether 'tis nobler in the mind to suffer the slings and
+          arrows of outrageous fortune, or to take arms against a sea of
+          troubles, and by opposing end them? To die: to sleep; no more; and, by
+          a sleep to say we end the heart-ache and the thousand natural shocks
+          that flesh is heir to, 'tis a consummation devoutly to be wish'd. To
+          die, to sleep; to sleep: perchance to dream: ay, there's the rub; for
+          in that sleep of death what dreams may come when we have shuffled off
+          this mortal coil, must give us pause. There's the respect that makes
+          calamity of so long a life; for who would bear the whips and scorns of
+          time, the oppressor's wrong, the proud man's contumely, the pangs of
+          dispriz'd love, the law's delay, the insolence of office, and the
+          spurns that patient merit of the unworthy takes, when he himself might
+          his quietus make with a bare bodkin? Who would fardels bear, to grunt
+          and sweat under a weary life, but that the dread of something after
+          death, the undiscover'd country from whose bourn no traveller returns,
+          puzzles the will, and makes us rather bear those ills we have, than
+          fly to others that we know not of? Thus consience doth make cowards of
+          us all; and thus the native hue of resolution is sicklied o'er with
+          the pale cast of thought, and enterprises of great pith and moment
+          with this regard their currents turn awry, and lose the name of
+          action. To be, or not to be: that is the question: whether 'tis nobler
+          in the mind to suffer the slings and arrows of outrageous fortune, or
+          to take arms against a sea of troubles, and by opposing end them? To
+          die: to sleep; no more; and, by a sleep to say we end the heart-ache
+          and the thousand natural shocks that flesh is heir to, 'tis a
+          consummation devoutly to be wish'd. To die, to sleep; to sleep:
+          perchance to dream: ay, there's the rub; for in that sleep of death
+          what dreams may come when we have shuffled off this mortal coil, must
+          give us pause. There's the respect that makes calamity of so long a
+          life; for who would bear the whips and scorns of time, the oppressor's
+          wrong, the proud man's contumely, the pangs of dispriz'd love, the
+          law's delay, the insolence of office, and the spurns that patient
+          merit of the unworthy takes, when he himself might his quietus make
+          with a bare bodkin? Who would fardels bear, to grunt and sweat under a
+          weary life, but that the dread of something after death, the
+          undiscover'd country from whose bourn no traveller returns, puzzles
+          the will, and makes us rather bear those ills we have, than fly to
+          others that we know not of? Thus consience doth make cowards of us
+          all; and thus the native hue of resolution is sicklied o'er with the
+          pale cast of thought, and enterprises of great pith and moment with
+          this regard their currents turn awry, and lose the name of action. To
+          be, or not to be: that is the question: whether 'tis nobler in the
+          mind to suffer the slings and arrows of outrageous fortune, or to take
+          arms against a sea of troubles, and by opposing end them? To die: to
+          sleep; no more; and, by a sleep to say we end the heart-ache and the
+          thousand natural shocks that flesh is heir to, 'tis a consummation
+          devoutly to be wish'd. To die, to sleep; to sleep: perchance to dream:
+          ay, there's the rub; for in that sleep of death what dreams may come
+          when we have shuffled off this mortal coil, must give us pause.
+          There's the respect that makes calamity of so long a life; for who
+          would bear the whips and scorns of time, the oppressor's wrong, the
+          proud man's contumely, the pangs of dispriz'd love, the law's delay,
+          the insolence of office, and the spurns that patient merit of the
+          unworthy takes, when he himself might his quietus make with a bare
+          bodkin? Who would fardels bear, to grunt and sweat under a weary life,
+          but that the dread of something after death, the undiscover'd country
+          from whose bourn no traveller returns, puzzles the will, and makes us
+          rather bear those ills we have, than fly to others that we know not
+          of? Thus consience doth make cowards of us all; and thus the native
+          hue of resolution is sicklied o'er with the pale cast of thought, and
+          enterprises of great pith and moment with this regard their currents
+          turn awry, and lose the name of action.{" "}
         </p>
       </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    </MantineProvider>
+  );
 }
 
-export default App
+export default App;
