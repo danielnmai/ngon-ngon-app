@@ -1,0 +1,6 @@
+.header {
+  position: sticky;
+  bottom: 0;
+  height: 50px;
+  z-index: 999;
+}
