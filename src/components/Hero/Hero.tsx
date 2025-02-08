@@ -12,12 +12,7 @@ export const Hero = () => {
           less.
         </Title>
 
-        <Button
-          variant="gradient"
-          size="xl"
-          radius="xl"
-          className={classes.control}
-        >
+        <Button size="xl" radius="sm" className={classes.control}>
           Order Now
         </Button>
       </Container>
