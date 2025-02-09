@@ -13,9 +13,7 @@ function App() {
     <MantineProvider>
       <Header />
       <Hero />
-      <section id="menu">
-        <Menu />
-      </section>
+      <Menu />
       <Footer />
     </MantineProvider>
   );
