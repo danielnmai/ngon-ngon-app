@@ -3,7 +3,7 @@ import styles from "./Header.module.css";
 
 export const Header = () => {
   return (
-    <div className={styles.header}>
+    <header className={styles.header}>
       <div>Logo</div>
       <Group>
         <Button variant="outline">Order Now</Button>
@@ -13,6 +13,6 @@ export const Header = () => {
 
         <Button variant="outline">Log In</Button>
       </Group>
-    </div>
+    </header>
   );
 };

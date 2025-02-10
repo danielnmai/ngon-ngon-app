@@ -15,3 +15,10 @@
   font-family: "Cormorant Garamond";
   color: var(--primary-font-color);
 }
+
+.menuItem {
+  height: 20rem;
+  background-image: url("src/assets/pictures/bun-dau-mam-tom.jpg");
+  background-size: cover;
+  background-position: center;
+}
