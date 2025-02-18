@@ -6,17 +6,12 @@ import {
   Text,
   Title,
 } from "@mantine/core";
-import { useEffect, useState } from "react";
 import styles from "./Menu.module.css";
 
+import { useQuery } from "@tanstack/react-query";
+import { Food } from "../../schemas/menu";
+import APIService from "../../services/api";
 import PlusIcon from "../Icons/PlusIcon";
-
-type Food = {
-  id: number;
-  name: string;
-  description: string;
-  price: number;
-};
 
 type MenuItemProps = {
   food: Food;
@@ -35,25 +30,21 @@ const MenuItem = ({ food }: MenuItemProps) => {
   );
 };
 
+const fetchMenu = async () => {
+  const api = new APIService();
+  const { data } = await api.fetchMenu();
+  return data;
+};
+
 const Menu = () => {
-  const [foods, setFoods] = useState<Food[]>([]);
+  const { isPending, error, data } = useQuery({
+    queryKey: ["fetchMenu"],
+    queryFn: fetchMenu,
+  });
 
-  useEffect(() => {
-    const fetchFoods = async () => {
-      try {
-        const res = await fetch("http://localhost:3000/v1/foods");
-        const data = await res.json();
+  if (isPending) return <div>Loading...</div>;
 
-        setFoods(data);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-
-    fetchFoods();
-  }, []);
-
-  console.log("foods ", foods);
+  if (error) return <div>Error: {error.message}</div>;
 
   return (
     <section id="menu" className={styles.menuSection}>
@@ -65,7 +56,7 @@ const Menu = () => {
           We cook fresh for each order, minimum preparation time is 3 hours.
         </Title>
         <SimpleGrid cols={{ base: 1, sm: 2, lg: 3 }}>
-          {foods.map((foodItem) => (
+          {data.map((foodItem) => (
             <MenuItem food={foodItem} />
           ))}
         </SimpleGrid>
