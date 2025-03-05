@@ -6,12 +6,11 @@ import {
   Text,
   Title,
 } from "@mantine/core";
-import styles from "./Menu.module.css";
 
 import { useQuery } from "@tanstack/react-query";
+import { Plus } from "lucide-react";
 import { Food } from "../../schemas/menu";
 import APIService from "../../services/api";
-import PlusIcon from "../Icons/PlusIcon";
 
 type MenuItemProps = {
   food: Food;
@@ -19,9 +18,14 @@ type MenuItemProps = {
 
 const MenuItem = ({ food }: MenuItemProps) => {
   return (
-    <Stack className={styles.menuItemContainer}>
-      <Paper className={styles.menuItemDisplay} radius="lg">
-        <PlusIcon className={styles.menuSelectionIcon} />
+    <Stack className="m-4">
+      <Paper
+        className="flex justify-end items-end bg-[url('src/assets/pictures/bun-dau-mam-tom.jpg')] bg-cover bg-center min-w-[20rem] h-40"
+        radius="lg"
+      >
+        <div className="flex justify-center items-center h-8 w-8 rounded-full bg-white m-4">
+          <Plus className="h-4 w-4" />
+        </div>
       </Paper>
       <Title order={4}>{food.name}</Title>
       <Text c="gray">{food.description}</Text>
@@ -47,12 +51,12 @@ const Menu = () => {
   if (error) return <div>Error: {error.message}</div>;
 
   return (
-    <section id="menu" className={styles.menuSection}>
-      <Container className={styles.container}>
-        <Title className={styles.title} order={1}>
+    <section id="menu" className="flex justify-center items-center">
+      <Container className="pt-12 ml-4 mr-4 h-full max-w-[1920px]">
+        <Title className="font-cormorant text-primary" order={1}>
           ORDER ONLINE
         </Title>
-        <Title order={3} className={styles.subtitle}>
+        <Title order={3} className="font-cormorant text-primary">
           We cook fresh for each order, minimum preparation time is 3 hours.
         </Title>
         <SimpleGrid cols={{ base: 1, sm: 2, lg: 3 }}>

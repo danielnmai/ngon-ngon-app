@@ -1,3 +1,11 @@
+@layer theme, base, components, mantine, utilities;
+
+@import "tailwindcss";
+
+@layer mantine {
+  @import "@mantine/core/styles.layer.css";
+}
+
 @font-face {
   font-family: "Bebas Neue";
   src: url("./assets/fonts/BebasNeue-Regular.ttf");
@@ -24,9 +32,13 @@ html {
   padding: 0;
 }
 
-:root {
-  --primary-font-color: #34704a;
-  --background-color: #f1fbbd;
+@theme {
+  --color-primary: #34704a;
+  --color-secondary: #f1fbbd;
+  --font-bebas: "Bebas Neue";
+  --font-cormorant: "Cormorant Garamond";
+  --font-helvetica: "Helvetica Neue";
+  --font-roboto: "Roboto";
 }
 
 body {

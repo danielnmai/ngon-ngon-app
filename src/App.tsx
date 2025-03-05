@@ -1,6 +1,4 @@
-import "@mantine/core/styles.css";
 import "./App.css";
-import "./components/Header/Header";
 
 import { MantineProvider } from "@mantine/core";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";

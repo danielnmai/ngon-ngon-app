@@ -1,9 +1,8 @@
 import { Anchor, Button, Group } from "@mantine/core";
-import styles from "./Header.module.css";
 
 export const Header = () => {
   return (
-    <header className={styles.header}>
+    <header className="sticky top-0 h-12 bg-white w-full flex justify-between z-50">
       <div>Logo</div>
       <Group>
         <Button variant="outline">Order Now</Button>
