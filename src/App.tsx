@@ -2,10 +2,10 @@ import "./App.css";
 
 import { MantineProvider } from "@mantine/core";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { Footer } from "./components/Footer/Footer";
-import { Header } from "./components/Header/Header";
-import { Hero } from "./components/Hero/Hero";
-import Menu from "./components/Menu/Menu";
+import { Footer } from "./components/Footer";
+import { Header } from "./components/Header";
+import { Hero } from "./components/Hero";
+import Menu from "./components/Menu";
 
 const queryClient = new QueryClient();
 
