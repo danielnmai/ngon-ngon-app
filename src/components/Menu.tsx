@@ -31,7 +31,7 @@ const Menu = () => {
         </Title>
         <SimpleGrid cols={{ base: 1, sm: 2, lg: 3 }}>
           {data.map((foodItem) => (
-            <MenuItem food={foodItem} />
+            <MenuItem food={foodItem} key={foodItem.id} />
           ))}
         </SimpleGrid>
       </Container>

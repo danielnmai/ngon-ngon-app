@@ -1,6 +1,6 @@
 import "./App.css";
 
-import { MantineProvider } from "@mantine/core";
+import { createTheme, MantineProvider, Radio } from "@mantine/core";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Footer } from "./components/Footer";
 import { Header } from "./components/Header";
@@ -9,10 +9,20 @@ import Menu from "./components/Menu";
 
 const queryClient = new QueryClient();
 
+const theme = createTheme({
+  components: {
+    Radio: Radio.extend({
+      styles: {
+        label: { userSelect: "none" },
+      },
+    }),
+  },
+});
+
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <MantineProvider>
+      <MantineProvider theme={theme}>
         <Header />
         <Hero />
         <Menu />

@@ -34,7 +34,7 @@ const MenuItem = ({ food }: MenuItemProps) => {
         <Title order={4}>{food.name}</Title>
         <Text c="gray">{food.description}</Text>
         <Text>{food.price}</Text>
-      </Stack>
+      </Stack>fes
 
       <OrderModal food={food} onClose={handleModalClose} opened={opened} />
     </>
