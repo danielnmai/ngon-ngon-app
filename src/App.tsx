@@ -6,6 +6,7 @@ import { Footer } from "./components/Footer";
 import { Header } from "./components/Header";
 import { Hero } from "./components/Hero";
 import Menu from "./components/Menu";
+import { CartProvider } from "./contexts/CartContext";
 
 const queryClient = new QueryClient();
 
@@ -23,10 +24,12 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <MantineProvider theme={theme}>
-        <Header />
-        <Hero />
-        <Menu />
-        <Footer />
+        <CartProvider>
+          <Header />
+          <Hero />
+          <Menu />
+          <Footer />
+        </CartProvider>
       </MantineProvider>
     </QueryClientProvider>
   );

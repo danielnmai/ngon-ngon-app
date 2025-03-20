@@ -13,27 +13,15 @@ import {
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { MinusIcon, PlusIcon } from "lucide-react";
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useContext, useState } from "react";
+import { CartContext, CartItem } from "../contexts/CartContext";
 import { Food, FoodOption } from "../schemas/menu";
+import { Size } from "../utils/constants";
 
 type ModalProps = {
   food: Food;
   opened: boolean;
   onClose: () => void;
-};
-
-enum Size {
-  small = "SMALL",
-  medium = "MEDIUM",
-  large = "LARGE",
-}
-
-type FormValues = {
-  quantity: number;
-  size: Size;
-  foodId: number;
-  specialRequest?: string;
-  totalPrice: number;
 };
 
 const OrderModal = ({ food, opened, onClose }: ModalProps) => {
@@ -42,8 +30,9 @@ const OrderModal = ({ food, opened, onClose }: ModalProps) => {
   const [selectedOption, setSelectedOption] = useState<FoodOption>(
     food.options[0]
   );
+  const { addItem } = useContext(CartContext);
 
-  const form = useForm<FormValues>({
+  const form = useForm<CartItem>({
     initialValues: {
       quantity: food.options[0].minQuantity,
       size: Size.medium,
@@ -54,44 +43,80 @@ const OrderModal = ({ food, opened, onClose }: ModalProps) => {
   });
 
   const incrementQuantity = () => {
-    setQuantity(quantity + 1);
-    form.setFieldValue("quantity", quantity + 1);
-    setTotalPrice(totalPrice + selectedOption.price);
-    form.setFieldValue("totalPrice", totalPrice + selectedOption.price);
+    const newQuantity = quantity + 1;
+    const newTotalPrice = totalPrice + selectedOption.price;
+
+    setQuantity(newQuantity);
+    form.setFieldValue("quantity", newQuantity);
+    setTotalPrice(newTotalPrice);
+    form.setFieldValue("totalPrice", newTotalPrice);
   };
 
   const decrementQuantity = () => {
     if (quantity == food.options[0].minQuantity) {
       return;
     }
-    setQuantity(quantity - 1);
-    form.setFieldValue("quantity", quantity - 1);
-    setTotalPrice(totalPrice - selectedOption!.price);
-    form.setFieldValue("totalPrice", totalPrice - selectedOption.price);
+    const newQuantity = quantity - 1;
+    const newTotalPrice = totalPrice - selectedOption.price;
+
+    setQuantity(newQuantity);
+    form.setFieldValue("quantity", newQuantity);
+    setTotalPrice(newTotalPrice);
+    form.setFieldValue("totalPrice", newTotalPrice);
   };
 
-  const handleSubmit = (values: FormValues) => {
-    console.log(values);
+  const handleSubmit = (values: CartItem) => {
+    addItem(values);
+    onClose();
   };
 
-  const onRadioOptionChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    const option = food.options.find((option) => option.size === value);
+  const onFoodSizeChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const foodSize = e.target.value;
+    const foodOption = food.options.find((option) => option.size === foodSize);
 
-    if (option) {
-      setSelectedOption(option);
-      setTotalPrice(option.price * quantity);
-      form.setFieldValue("totalPrice", option.price * quantity);
+    if (foodOption) {
+      setSelectedOption(foodOption);
+      setTotalPrice(foodOption.price * quantity);
+      form.setFieldValue("totalPrice", foodOption.price * quantity);
     }
   };
 
-  const renderFoodOption = (option: FoodOption) => {
+  const onFoodQuantityChange = (e: ChangeEvent<HTMLInputElement>) => {
+    // default to min quantity if input is empty
+    if (!e.target.value) {
+      setQuantity(food.options[0].minQuantity);
+      form.setFieldValue("quantity", food.options[0].minQuantity);
+      return;
+    }
+
+    const quantity = parseInt(e.target.value);
+    setQuantity(quantity);
+    form.setFieldValue("quantity", quantity);
+
+    const newTotalPrice = quantity * selectedOption.price;
+    setTotalPrice(newTotalPrice);
+    form.setFieldValue("totalPrice", newTotalPrice);
+  };
+
+  const renderFoodSizeOption = (option: FoodOption) => {
     return (
       <Radio
         key={option.id}
         value={option.size}
-        label={option.size}
-        onChange={onRadioOptionChange}
+        label={
+          <Group>
+            <Text>{option.size}</Text>
+            <NumberFormatter
+              value={option.price / 100}
+              prefix="$"
+              thousandSeparator
+              fixedDecimalScale
+              decimalScale={2}
+              className="text-gray-500"
+            />
+          </Group>
+        }
+        onChange={onFoodSizeChange}
         my={8}
         color="var(--color-primary)"
         classNames={{
@@ -116,7 +141,7 @@ const OrderModal = ({ food, opened, onClose }: ModalProps) => {
             key={form.key("size")}
             my={10}
           >
-            {food.options.map(renderFoodOption)}
+            {food.options.map(renderFoodSizeOption)}
           </Radio.Group>
 
           <Textarea
@@ -148,21 +173,7 @@ const OrderModal = ({ food, opened, onClose }: ModalProps) => {
                 key={form.key("quantity")}
                 maxLength={3}
                 {...form.getInputProps("quantity")}
-                onChange={(e) => {
-                  if (!e.target.value) {
-                    setQuantity(food.options[0].minQuantity);
-                    form.setFieldValue("quantity", food.options[0].minQuantity);
-                    return;
-                  }
-                  const quantity = parseInt(e.target.value);
-                  setQuantity(quantity);
-                  form.setFieldValue("quantity", quantity);
-                  setTotalPrice(quantity * selectedOption.price);
-                  form.setFieldValue(
-                    "totalPrice",
-                    quantity * selectedOption.price
-                  );
-                }}
+                onChange={onFoodQuantityChange}
               />
 
               <div
