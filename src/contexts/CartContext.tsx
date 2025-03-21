@@ -14,6 +14,8 @@ export type CartContextType = {
   removeItem: (item: CartItem) => void;
   clearCart: () => void;
   getCartTotal: () => number;
+  cartOpened: boolean;
+  setCartOpened: (opened: boolean) => void;
 };
 
 export const CartContext = createContext<CartContextType>({
@@ -22,6 +24,8 @@ export const CartContext = createContext<CartContextType>({
   removeItem: () => {},
   clearCart: () => {},
   getCartTotal: () => 0,
+  cartOpened: false,
+  setCartOpened: () => {},
 });
 
 import { ReactNode } from "react";
@@ -32,6 +36,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
   const [cartItems, setCartItems] = useState<CartItem[]>(
     storedCartItems ? JSON.parse(storedCartItems) : []
   );
+  const [cartOpened, setCartOpened] = useState(false);
 
   const addItem = (item: CartItem) => {
     const itemInCart = cartItems.find(
@@ -96,7 +101,15 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
 
   return (
     <CartContext.Provider
-      value={{ cartItems, addItem, removeItem, clearCart, getCartTotal }}
+      value={{
+        cartItems,
+        addItem,
+        removeItem,
+        clearCart,
+        getCartTotal,
+        cartOpened,
+        setCartOpened,
+      }}
     >
       {children}
     </CartContext.Provider>

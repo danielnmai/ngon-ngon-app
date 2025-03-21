@@ -2,6 +2,7 @@ import "./App.css";
 
 import { createTheme, MantineProvider, Radio } from "@mantine/core";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import CartDrawer from "./components/CartDrawer";
 import { Footer } from "./components/Footer";
 import { Header } from "./components/Header";
 import { Hero } from "./components/Hero";
@@ -29,6 +30,7 @@ function App() {
           <Hero />
           <Menu />
           <Footer />
+          <CartDrawer />
         </CartProvider>
       </MantineProvider>
     </QueryClientProvider>
