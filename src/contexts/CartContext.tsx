@@ -1,17 +1,19 @@
 import { createContext, useEffect, useState } from "react";
 
-export type CartItem = {
+export type CartItemType = {
   quantity: number;
   size: Size;
   foodId: number;
   specialRequest?: string;
   totalPrice: number;
+  name: string;
+  optionPrice: number;
 };
 
 export type CartContextType = {
-  cartItems: CartItem[];
-  addItem: (item: CartItem) => void;
-  removeItem: (item: CartItem) => void;
+  cartItems: CartItemType[];
+  addItem: (item: CartItemType) => void;
+  removeItem: (item: CartItemType) => void;
   clearCart: () => void;
   getCartTotal: () => number;
   cartOpened: boolean;
@@ -33,12 +35,12 @@ import { Size } from "../utils/constants";
 
 export const CartProvider = ({ children }: { children: ReactNode }) => {
   const storedCartItems = localStorage.getItem("cartItems");
-  const [cartItems, setCartItems] = useState<CartItem[]>(
+  const [cartItems, setCartItems] = useState<CartItemType[]>(
     storedCartItems ? JSON.parse(storedCartItems) : []
   );
   const [cartOpened, setCartOpened] = useState(false);
 
-  const addItem = (item: CartItem) => {
+  const addItem = (item: CartItemType) => {
     const itemInCart = cartItems.find(
       (cartItem) =>
         cartItem.foodId === item.foodId && cartItem.size === item.size
@@ -57,7 +59,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
-  const removeItem = (item: CartItem) => {
+  const removeItem = (item: CartItemType) => {
     const itemInCart = cartItems.find(
       (cartItem) =>
         cartItem.foodId === item.foodId && cartItem.size === item.size

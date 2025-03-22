@@ -12,11 +12,11 @@ import {
   Title,
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
-import { MinusIcon, PlusIcon } from "lucide-react";
 import { ChangeEvent, useContext, useState } from "react";
-import { CartContext, CartItem } from "../contexts/CartContext";
+import { CartContext, CartItemType } from "../contexts/CartContext";
 import { Food, FoodOption } from "../schemas/menu";
 import { Size } from "../utils/constants";
+import ItemQuantityInput from "./ItemQuantityInput";
 
 type ModalProps = {
   food: Food;
@@ -32,17 +32,19 @@ const OrderModal = ({ food, opened, onClose }: ModalProps) => {
   );
   const { addItem } = useContext(CartContext);
 
-  const form = useForm<CartItem>({
+  const form = useForm<CartItemType>({
     initialValues: {
       quantity: food.options[0].minQuantity,
       size: Size.medium,
       foodId: food.id,
       specialRequest: "",
       totalPrice: food.options[0].price,
+      name: food.name,
+      optionPrice: food.options[0].price,
     },
   });
 
-  const incrementQuantity = () => {
+  const handleIncrementQuantity = () => {
     const newQuantity = quantity + 1;
     const newTotalPrice = totalPrice + selectedOption.price;
 
@@ -52,7 +54,7 @@ const OrderModal = ({ food, opened, onClose }: ModalProps) => {
     form.setFieldValue("totalPrice", newTotalPrice);
   };
 
-  const decrementQuantity = () => {
+  const handleDecrementQuantity = () => {
     if (quantity == food.options[0].minQuantity) {
       return;
     }
@@ -65,23 +67,12 @@ const OrderModal = ({ food, opened, onClose }: ModalProps) => {
     form.setFieldValue("totalPrice", newTotalPrice);
   };
 
-  const handleSubmit = (values: CartItem) => {
+  const handleSubmit = (values: CartItemType) => {
     addItem(values);
     onClose();
   };
 
-  const onFoodSizeChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const foodSize = e.target.value;
-    const foodOption = food.options.find((option) => option.size === foodSize);
-
-    if (foodOption) {
-      setSelectedOption(foodOption);
-      setTotalPrice(foodOption.price * quantity);
-      form.setFieldValue("totalPrice", foodOption.price * quantity);
-    }
-  };
-
-  const onFoodQuantityChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleChangeQuantity = (e: ChangeEvent<HTMLInputElement>) => {
     // default to min quantity if input is empty
     if (!e.target.value) {
       setQuantity(food.options[0].minQuantity);
@@ -96,6 +87,18 @@ const OrderModal = ({ food, opened, onClose }: ModalProps) => {
     const newTotalPrice = quantity * selectedOption.price;
     setTotalPrice(newTotalPrice);
     form.setFieldValue("totalPrice", newTotalPrice);
+  };
+
+  const onFoodSizeChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const foodSize = e.target.value;
+    const foodOption = food.options.find((option) => option.size === foodSize);
+
+    if (foodOption) {
+      setSelectedOption(foodOption);
+      setTotalPrice(foodOption.price * quantity);
+      form.setFieldValue("totalPrice", foodOption.price * quantity);
+      form.setFieldValue("optionPrice", foodOption.price);
+    }
   };
 
   const renderFoodSizeOption = (option: FoodOption) => {
@@ -157,32 +160,13 @@ const OrderModal = ({ food, opened, onClose }: ModalProps) => {
           />
 
           <Group w="100%" className="justify-between flex-nowrap">
-            <Group className="max-w-[200px] select-none flex-nowrap ">
-              <div
-                onClick={decrementQuantity}
-                className="cursor-pointer p-2 hover:bg-gray-100 hover:rounded-md"
-              >
-                <MinusIcon width={30} height={30} />
-              </div>
-              <input
-                type="text"
-                inputMode="numeric"
-                value={quantity}
-                className="w-12 p-2 text-center focus:outline-none focus:border-primary focus:rounded-md focus:border-solid focus:border-1 "
-                aria-label="order quantity input"
-                key={form.key("quantity")}
-                maxLength={3}
-                {...form.getInputProps("quantity")}
-                onChange={onFoodQuantityChange}
-              />
-
-              <div
-                onClick={incrementQuantity}
-                className="cursor-pointer p-2 hover:bg-gray-100 hover:rounded-md"
-              >
-                <PlusIcon cursor="pointer" width={30} height={30} />
-              </div>
-            </Group>
+            <ItemQuantityInput
+              form={form}
+              quantity={quantity}
+              onIncrementQuantity={handleIncrementQuantity}
+              onDecrementQuantity={handleDecrementQuantity}
+              onChangeQuantity={handleChangeQuantity}
+            />
 
             <Button size="md" className="bg-primary" type="submit">
               Add to Cart -
