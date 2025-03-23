@@ -63,8 +63,6 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
             : cartItem
         )
       );
-    } else {
-      setCartItems([...cartItems, item]);
     }
   };
 
@@ -73,6 +71,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
       (cartItem) =>
         cartItem.foodId === item.foodId && cartItem.size === item.size
     );
+
     if (itemInCart && itemInCart?.quantity > item.optionQuantity) {
       setCartItems(
         cartItems.map((cartItem) =>
@@ -93,14 +92,17 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
       (cartItem) =>
         cartItem.foodId === item.foodId && cartItem.size === item.size
     );
+
+    const itemQuantity = Math.max(item.quantity, item.optionQuantity);
+
     if (itemInCart) {
       setCartItems(
         cartItems.map((cartItem) =>
           cartItem.foodId === item.foodId && cartItem.size === item.size
             ? {
                 ...cartItem,
-                quantity: item.quantity,
-                totalPrice: item.optionPrice * item.quantity,
+                quantity: itemQuantity,
+                totalPrice: item.optionPrice * itemQuantity,
               }
             : cartItem
         )

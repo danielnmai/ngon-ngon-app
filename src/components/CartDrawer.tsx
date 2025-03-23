@@ -21,10 +21,10 @@ const CartDrawer = () => {
     >
       <div>Order Summary</div>
       {cartItems.map((item, index) => (
-        <>
-          <CartItem key={index} item={item} />
+        <div key={index}>
+          <CartItem item={item} />
           <Divider my={8} />
-        </>
+        </div>
       ))}
     </Drawer>
   );

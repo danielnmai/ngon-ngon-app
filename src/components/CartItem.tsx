@@ -1,7 +1,7 @@
 import { Group, Image, Stack, Text } from "@mantine/core";
 import { useElementSize } from "@mantine/hooks";
 import { Trash2 } from "lucide-react";
-import { useContext } from "react";
+import { ChangeEvent, useContext } from "react";
 import tempImg from "../assets/pictures/bun-dau-mam-tom.jpg";
 import { CartContext, CartItemType } from "../contexts/CartContext";
 import { centsToDollar } from "../utils";
@@ -26,8 +26,13 @@ const CartItem = ({ item }: CartItemProps) => {
     decrementItemQty(item);
   };
 
-  const handleChangeQuantity = () => {
-    addItem(item);
+  const handleChangeQuantity = (e: ChangeEvent<HTMLInputElement>) => {
+    if (!e.target.value) {
+      return;
+    }
+    const quantity = parseInt(e.target.value);
+
+    addItem({ ...item, quantity });
   };
 
   const handleRemoveItem = () => {
