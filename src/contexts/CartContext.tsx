@@ -8,6 +8,7 @@ export type CartItemType = {
   totalPrice: number;
   name: string;
   optionPrice: number;
+  optionQuantity: number;
 };
 
 export type CartContextType = {
@@ -18,6 +19,8 @@ export type CartContextType = {
   getCartTotal: () => number;
   cartOpened: boolean;
   setCartOpened: (opened: boolean) => void;
+  incrementItemQty: (item: CartItemType) => void;
+  decrementItemQty: (item: CartItemType) => void;
 };
 
 export const CartContext = createContext<CartContextType>({
@@ -28,6 +31,8 @@ export const CartContext = createContext<CartContextType>({
   getCartTotal: () => 0,
   cartOpened: false,
   setCartOpened: () => {},
+  incrementItemQty: () => {},
+  decrementItemQty: () => {},
 });
 
 import { ReactNode } from "react";
@@ -40,7 +45,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
   );
   const [cartOpened, setCartOpened] = useState(false);
 
-  const addItem = (item: CartItemType) => {
+  const incrementItemQty = (item: CartItemType) => {
     const itemInCart = cartItems.find(
       (cartItem) =>
         cartItem.foodId === item.foodId && cartItem.size === item.size
@@ -50,7 +55,53 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
       setCartItems(
         cartItems.map((cartItem) =>
           cartItem.foodId === item.foodId && cartItem.size === item.size
-            ? { ...cartItem, quantity: cartItem.quantity + item.quantity }
+            ? {
+                ...cartItem,
+                quantity: cartItem.quantity + 1,
+                totalPrice: cartItem.totalPrice + item.optionPrice,
+              }
+            : cartItem
+        )
+      );
+    } else {
+      setCartItems([...cartItems, item]);
+    }
+  };
+
+  const decrementItemQty = (item: CartItemType) => {
+    const itemInCart = cartItems.find(
+      (cartItem) =>
+        cartItem.foodId === item.foodId && cartItem.size === item.size
+    );
+    if (itemInCart && itemInCart?.quantity > item.optionQuantity) {
+      setCartItems(
+        cartItems.map((cartItem) =>
+          cartItem.foodId === item.foodId && cartItem.size === item.size
+            ? {
+                ...cartItem,
+                quantity: cartItem.quantity - 1,
+                totalPrice: cartItem.totalPrice - item.optionPrice,
+              }
+            : cartItem
+        )
+      );
+    }
+  };
+
+  const addItem = (item: CartItemType) => {
+    const itemInCart = cartItems.find(
+      (cartItem) =>
+        cartItem.foodId === item.foodId && cartItem.size === item.size
+    );
+    if (itemInCart) {
+      setCartItems(
+        cartItems.map((cartItem) =>
+          cartItem.foodId === item.foodId && cartItem.size === item.size
+            ? {
+                ...cartItem,
+                quantity: item.quantity,
+                totalPrice: item.optionPrice * item.quantity,
+              }
             : cartItem
         )
       );
@@ -60,26 +111,12 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const removeItem = (item: CartItemType) => {
-    const itemInCart = cartItems.find(
-      (cartItem) =>
-        cartItem.foodId === item.foodId && cartItem.size === item.size
+    setCartItems(
+      cartItems.filter(
+        (cartItem) =>
+          !(cartItem.foodId === item.foodId && cartItem.size === item.size)
+      )
     );
-    if (itemInCart?.quantity == 1) {
-      setCartItems(
-        cartItems.filter(
-          (cartItem) =>
-            cartItem.foodId !== item.foodId || cartItem.size !== item.size
-        )
-      );
-    } else {
-      setCartItems(
-        cartItems.map((cartItem) =>
-          cartItem.foodId === item.foodId && cartItem.size === item.size
-            ? { ...cartItem, quantity: cartItem.quantity - 1 }
-            : cartItem
-        )
-      );
-    }
   };
 
   const clearCart = () => {
@@ -105,12 +142,14 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
     <CartContext.Provider
       value={{
         cartItems,
-        addItem,
-        removeItem,
+        incrementItemQty,
+        decrementItemQty,
         clearCart,
         getCartTotal,
         cartOpened,
         setCartOpened,
+        addItem,
+        removeItem,
       }}
     >
       {children}

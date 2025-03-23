@@ -26,7 +26,9 @@ type ModalProps = {
 
 const OrderModal = ({ food, opened, onClose }: ModalProps) => {
   const [quantity, setQuantity] = useState<number>(food.options[0].minQuantity);
-  const [totalPrice, setTotalPrice] = useState<number>(food.options[0].price);
+  const [totalPrice, setTotalPrice] = useState<number>(
+    food.options[0].price * quantity
+  );
   const [selectedOption, setSelectedOption] = useState<FoodOption>(
     food.options[0]
   );
@@ -38,9 +40,10 @@ const OrderModal = ({ food, opened, onClose }: ModalProps) => {
       size: Size.medium,
       foodId: food.id,
       specialRequest: "",
-      totalPrice: food.options[0].price,
+      totalPrice: food.options[0].price * food.options[0].minQuantity,
       name: food.name,
       optionPrice: food.options[0].price,
+      optionQuantity: food.options[0].minQuantity,
     },
   });
 

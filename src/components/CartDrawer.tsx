@@ -10,6 +10,8 @@ const CartDrawer = () => {
     setCartOpened(false);
   };
 
+  const handleCheckout = () => {};
+
   return (
     <Drawer
       opened={cartOpened}
