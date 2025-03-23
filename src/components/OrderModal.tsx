@@ -4,7 +4,6 @@ import {
   Group,
   Image,
   Modal,
-  NumberFormatter,
   Radio,
   Stack,
   Text,
@@ -15,6 +14,7 @@ import { useForm } from "@mantine/form";
 import { ChangeEvent, useContext, useState } from "react";
 import { CartContext, CartItemType } from "../contexts/CartContext";
 import { Food, FoodOption } from "../schemas/menu";
+import { centsToDollar } from "../utils";
 import { Size } from "../utils/constants";
 import ItemQuantityInput from "./ItemQuantityInput";
 
@@ -109,14 +109,9 @@ const OrderModal = ({ food, opened, onClose }: ModalProps) => {
         label={
           <Group>
             <Text>{option.size}</Text>
-            <NumberFormatter
-              value={option.price / 100}
-              prefix="$"
-              thousandSeparator
-              fixedDecimalScale
-              decimalScale={2}
-              className="text-gray-500"
-            />
+            <Text size="sm" className="text-gray-500">
+              {centsToDollar(option.price)}
+            </Text>
           </Group>
         }
         onChange={onFoodSizeChange}
@@ -169,14 +164,7 @@ const OrderModal = ({ food, opened, onClose }: ModalProps) => {
             />
 
             <Button size="md" className="bg-primary" type="submit">
-              Add to Cart -
-              <NumberFormatter
-                prefix=" $"
-                value={totalPrice / 100}
-                thousandSeparator
-                decimalScale={2}
-                fixedDecimalScale
-              />
+              Add to Cart - {centsToDollar(totalPrice)}
             </Button>
           </Group>
         </form>

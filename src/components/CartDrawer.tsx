@@ -1,4 +1,4 @@
-import { Drawer } from "@mantine/core";
+import { Divider, Drawer } from "@mantine/core";
 import { useContext } from "react";
 import { CartContext } from "../contexts/CartContext";
 import CartItem from "./CartItem";
@@ -11,10 +11,18 @@ const CartDrawer = () => {
   };
 
   return (
-    <Drawer opened={cartOpened} onClose={handleClose} position="right">
+    <Drawer
+      opened={cartOpened}
+      onClose={handleClose}
+      position="right"
+      size={500}
+    >
       <div>Order Summary</div>
       {cartItems.map((item, index) => (
-        <CartItem key={index} item={item} />
+        <>
+          <CartItem key={index} item={item} />
+          <Divider my={8} />
+        </>
       ))}
     </Drawer>
   );
