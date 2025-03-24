@@ -10,6 +10,7 @@ type ItemQuantityInputProps = {
   onIncrementQuantity: () => void;
   onDecrementQuantity: () => void;
   onChangeQuantity: (e: ChangeEvent<HTMLInputElement>) => void;
+  onInputBlur: (e: ChangeEvent<HTMLInputElement>) => void;
 };
 
 const ItemQuantityInput = ({
@@ -18,6 +19,7 @@ const ItemQuantityInput = ({
   onIncrementQuantity,
   onDecrementQuantity,
   onChangeQuantity,
+  onInputBlur,
 }: ItemQuantityInputProps) => {
   return (
     <Group className="max-w-[200px] select-none flex-nowrap border-primary rounded-md border-solid border-1">
@@ -37,6 +39,7 @@ const ItemQuantityInput = ({
         maxLength={3}
         {...form?.getInputProps("quantity")}
         onChange={onChangeQuantity}
+        onBlur={onInputBlur}
       />
 
       <div

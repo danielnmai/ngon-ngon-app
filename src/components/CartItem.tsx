@@ -28,6 +28,7 @@ const CartItem = ({ item }: CartItemProps) => {
 
   const handleChangeQuantity = (e: ChangeEvent<HTMLInputElement>) => {
     if (!e.target.value) {
+      addItem({ ...item, quantity: item.optionQuantity });
       return;
     }
     const quantity = parseInt(e.target.value);
@@ -37,6 +38,18 @@ const CartItem = ({ item }: CartItemProps) => {
 
   const handleRemoveItem = () => {
     removeItem(item);
+  };
+
+  const handleInputBlur = (e: ChangeEvent<HTMLInputElement>) => {
+    if (!e.target.value) {
+      return;
+    }
+
+    const quantity = parseInt(e.target.value);
+
+    if (quantity < item.optionQuantity) {
+      addItem({ ...item, quantity: item.optionQuantity });
+    }
   };
 
   return (
@@ -57,6 +70,7 @@ const CartItem = ({ item }: CartItemProps) => {
             onIncrementQuantity={handleIncrementQuantity}
             onDecrementQuantity={handleDecrementQuantity}
             onChangeQuantity={handleChangeQuantity}
+            onInputBlur={handleInputBlur}
           />
           <Text>{centsToDollar(item.totalPrice)}</Text>
         </Group>

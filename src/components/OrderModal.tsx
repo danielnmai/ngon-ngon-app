@@ -36,14 +36,14 @@ const OrderModal = ({ food, opened, onClose }: ModalProps) => {
 
   const form = useForm<CartItemType>({
     initialValues: {
-      quantity: food.options[0].minQuantity,
+      quantity: selectedOption.minQuantity,
       size: Size.medium,
       foodId: food.id,
       specialRequest: "",
-      totalPrice: food.options[0].price * food.options[0].minQuantity,
+      totalPrice: selectedOption.price * selectedOption.minQuantity,
       name: food.name,
-      optionPrice: food.options[0].price,
-      optionQuantity: food.options[0].minQuantity,
+      optionPrice: selectedOption.price,
+      optionQuantity: selectedOption.minQuantity,
     },
   });
 
@@ -58,7 +58,7 @@ const OrderModal = ({ food, opened, onClose }: ModalProps) => {
   };
 
   const handleDecrementQuantity = () => {
-    if (quantity == food.options[0].minQuantity) {
+    if (quantity == selectedOption.minQuantity) {
       return;
     }
     const newQuantity = quantity - 1;
@@ -78,8 +78,8 @@ const OrderModal = ({ food, opened, onClose }: ModalProps) => {
   const handleChangeQuantity = (e: ChangeEvent<HTMLInputElement>) => {
     // default to min quantity if input is empty
     if (!e.target.value) {
-      setQuantity(food.options[0].minQuantity);
-      form.setFieldValue("quantity", food.options[0].minQuantity);
+      setQuantity(selectedOption.minQuantity);
+      form.setFieldValue("quantity", selectedOption.minQuantity);
       return;
     }
 
@@ -101,6 +101,24 @@ const OrderModal = ({ food, opened, onClose }: ModalProps) => {
       setTotalPrice(foodOption.price * quantity);
       form.setFieldValue("totalPrice", foodOption.price * quantity);
       form.setFieldValue("optionPrice", foodOption.price);
+    }
+  };
+
+  const handleInputBlur = (e: ChangeEvent<HTMLInputElement>) => {
+    if (!e.target.value) {
+      return;
+    }
+    const quantity = parseInt(e.target.value);
+
+    if (quantity < selectedOption.minQuantity) {
+      const newQuantity = selectedOption.minQuantity;
+      const newTotalPrice = selectedOption.price * selectedOption.minQuantity;
+
+      setQuantity(newQuantity);
+      setTotalPrice(newTotalPrice);
+
+      form.setFieldValue("quantity", newQuantity);
+      form.setFieldValue("totalPrice", newTotalPrice);
     }
   };
 
@@ -164,6 +182,7 @@ const OrderModal = ({ food, opened, onClose }: ModalProps) => {
               onIncrementQuantity={handleIncrementQuantity}
               onDecrementQuantity={handleDecrementQuantity}
               onChangeQuantity={handleChangeQuantity}
+              onInputBlur={handleInputBlur}
             />
 
             <Button size="md" className="bg-primary" type="submit">

@@ -93,16 +93,14 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
         cartItem.foodId === item.foodId && cartItem.size === item.size
     );
 
-    const itemQuantity = Math.max(item.quantity, item.optionQuantity);
-
     if (itemInCart) {
       setCartItems(
         cartItems.map((cartItem) =>
           cartItem.foodId === item.foodId && cartItem.size === item.size
             ? {
                 ...cartItem,
-                quantity: itemQuantity,
-                totalPrice: item.optionPrice * itemQuantity,
+                quantity: item.quantity,
+                totalPrice: item.optionPrice * item.quantity,
               }
             : cartItem
         )
