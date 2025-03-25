@@ -18,13 +18,9 @@ const CartItem = ({ item }: CartItemProps) => {
 
   const isWideScreen = width >= 768;
 
-  const handleIncrementQuantity = () => {
-    incrementItemQty(item);
-  };
+  const handleIncrementQuantity = () => incrementItemQty(item);
 
-  const handleDecrementQuantity = () => {
-    decrementItemQty(item);
-  };
+  const handleDecrementQuantity = () => decrementItemQty(item);
 
   const handleChangeQuantity = (e: ChangeEvent<HTMLInputElement>) => {
     if (!e.target.value) {
@@ -53,7 +49,7 @@ const CartItem = ({ item }: CartItemProps) => {
   };
 
   return (
-    <Group className="p-2 h-fit w-full flex-nowrap justify-between">
+    <Group className="h-fit w-full flex-nowrap justify-between">
       <Image src={tempImg} w={120} h={120} radius="sm" />
       <Group
         ref={ref}
