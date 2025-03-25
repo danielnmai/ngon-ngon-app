@@ -3,21 +3,28 @@ import {
   Container,
   Divider,
   Drawer,
+  Group,
   ScrollArea,
   Stack,
+  Text,
 } from "@mantine/core";
+import { Lock } from "lucide-react";
 import { useContext } from "react";
 import { CartContext } from "../contexts/CartContext";
+import { centsToDollar } from "../utils";
 import CartItem from "./CartItem";
 
 const CartDrawer = () => {
-  const { cartOpened, setCartOpened, cartItems } = useContext(CartContext);
+  const { cartOpened, setCartOpened, cartItems, getCartTotal } =
+    useContext(CartContext);
 
   const handleClose = () => {
     setCartOpened(false);
   };
 
   const handleCheckout = () => {};
+
+  const cartTotal = getCartTotal();
 
   return (
     <Drawer
@@ -27,9 +34,12 @@ const CartDrawer = () => {
       size={600}
       title={`Cart (${cartItems.length} items)`}
       scrollAreaComponent={ScrollArea.Autosize}
+      closeButtonProps={{
+        size: "lg",
+      }}
     >
       <Stack className="items-center">
-        <ScrollArea className="h-[calc(100dvh-250px)]">
+        <ScrollArea className="h-[calc(100dvh-350px)]">
           {cartItems.map((item, index) => (
             <Container key={index}>
               <Divider className="my-4" />
@@ -37,10 +47,32 @@ const CartDrawer = () => {
             </Container>
           ))}
         </ScrollArea>
-        <Container className=" bg-white sticky bottom-0 w-full">
-          <Stack>
-            <Button>Checkout</Button>
-            <Button>View Cart</Button>
+        <Container className="h-full bg-white sticky bottom-0 w-full">
+          <Divider className="my-4" />
+          <Stack align="center">
+            <Group justify="space-between" w="100%">
+              <Text size="lg" fw={600}>
+                Total
+              </Text>
+              <Text size="xl" fw={600}>
+                {centsToDollar(cartTotal)}
+              </Text>
+            </Group>
+            <Button w="100%" size="lg" color="var(--color-primary)">
+              Checkout
+            </Button>
+            <Button
+              w="100%"
+              size="lg"
+              variant="outline"
+              color="var(--color-primary)"
+            >
+              View Cart
+            </Button>
+            <Group>
+              <Lock /> Secure checkout with Paypal
+              <Text></Text>
+            </Group>
           </Stack>
         </Container>
       </Stack>
