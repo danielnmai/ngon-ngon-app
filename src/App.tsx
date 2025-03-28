@@ -2,12 +2,11 @@ import "./App.css";
 
 import { createTheme, MantineProvider, Radio } from "@mantine/core";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import CartDrawer from "./components/CartDrawer";
-import { Footer } from "./components/Footer";
-import { Header } from "./components/Header";
-import { Hero } from "./components/Hero";
-import Menu from "./components/Menu";
+import { BrowserRouter, Route, Routes } from "react-router";
 import { CartProvider } from "./contexts/CartContext";
+import Checkout from "./pages/Checkout";
+import Home from "./pages/Home";
+import OrderSummary from "./pages/OrderSummary";
 
 const queryClient = new QueryClient();
 
@@ -25,13 +24,15 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <MantineProvider theme={theme}>
-        <CartProvider>
-          <Header />
-          <Hero />
-          <Menu />
-          <Footer />
-          <CartDrawer />
-        </CartProvider>
+        <BrowserRouter>
+          <CartProvider>
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="checkout" element={<Checkout />} />
+              <Route path="order" element={<OrderSummary />} />
+            </Routes>
+          </CartProvider>
+        </BrowserRouter>
       </MantineProvider>
     </QueryClientProvider>
   );
