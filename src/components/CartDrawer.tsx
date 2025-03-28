@@ -47,7 +47,7 @@ const CartDrawer = () => {
             </Container>
           ))}
         </ScrollArea>
-        <Container className="h-full bg-white sticky bottom-0 w-full">
+        <Container className="sticky bottom-0 w-full">
           <Divider className="my-4" />
           <Stack align="center">
             <Group justify="space-between" w="100%">

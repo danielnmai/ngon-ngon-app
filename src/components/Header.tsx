@@ -12,7 +12,7 @@ export const Header = () => {
 
   return (
     <header className="sticky top-0 h-12 bg-secondary w-full flex justify-between items-center z-10">
-      <Text className="ml-4">Ngon Ngon Restaurant</Text>
+      <Text className="ml-4">Ngon Ngon </Text>
       <Group className="mr-4">
         <Anchor variant="outline" href="#menu" className="no-underline">
           <Text className="text-primary hover:bg-primary hover:text-white px-2 py-1 rounded-sm border-1">
