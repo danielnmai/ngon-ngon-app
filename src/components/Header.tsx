@@ -11,7 +11,7 @@ export const Header = () => {
   };
 
   return (
-    <header className="sticky top-0 h-12 bg-secondary w-full flex justify-between items-center z-10">
+    <header className="sticky shrink-0 top-0 p-2 bg-secondary w-full flex justify-between items-center z-10">
       <Text className="ml-4">Ngon Ngon </Text>
       <Group className="mr-4">
         <Anchor variant="outline" href="#menu" className="no-underline">

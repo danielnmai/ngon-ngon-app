@@ -10,6 +10,7 @@ import {
 } from "@mantine/core";
 import { Lock } from "lucide-react";
 import { useContext } from "react";
+import { useNavigate } from "react-router";
 import { CartContext } from "../contexts/CartContext";
 import { centsToDollar } from "../utils";
 import CartItem from "./CartItem";
@@ -18,11 +19,15 @@ const CartDrawer = () => {
   const { cartOpened, setCartOpened, cartItems, getCartTotal } =
     useContext(CartContext);
 
+  const navigate = useNavigate();
+
   const handleClose = () => {
     setCartOpened(false);
   };
 
-  const handleCheckout = () => {};
+  const handleCheckout = () => navigate("/checkout");
+
+  const handleViewCart = () => navigate("/cart");
 
   const cartTotal = getCartTotal();
 
@@ -58,7 +63,12 @@ const CartDrawer = () => {
                 {centsToDollar(cartTotal)}
               </Text>
             </Group>
-            <Button w="100%" size="lg" color="var(--color-primary)">
+            <Button
+              w="100%"
+              size="lg"
+              color="var(--color-primary)"
+              onClick={handleCheckout}
+            >
               Checkout
             </Button>
             <Button
@@ -66,6 +76,7 @@ const CartDrawer = () => {
               size="lg"
               variant="outline"
               color="var(--color-primary)"
+              onClick={handleViewCart}
             >
               View Cart
             </Button>
