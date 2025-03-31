@@ -25,9 +25,15 @@ const CartDrawer = () => {
     setCartOpened(false);
   };
 
-  const handleCheckout = () => navigate("/checkout");
+  const handleCheckout = () => {
+    navigate("/checkout");
+    setCartOpened(false);
+  };
 
-  const handleViewCart = () => navigate("/cart");
+  const handleViewCart = () => {
+    navigate("/cart");
+    setCartOpened(false);
+  };
 
   const cartTotal = getCartTotal();
 
@@ -81,8 +87,8 @@ const CartDrawer = () => {
               View Cart
             </Button>
             <Group>
-              <Lock /> Secure checkout with Paypal
-              <Text></Text>
+              <Lock />
+              <Text>Secure checkout with Paypal</Text>
             </Group>
           </Stack>
         </Container>

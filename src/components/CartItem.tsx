@@ -49,7 +49,7 @@ const CartItem = ({ item }: CartItemProps) => {
   };
 
   return (
-    <Group className="h-fit w-full flex-nowrap justify-between">
+    <Group className="h-fit w-full flex-nowrap justify-between my-2">
       <Image src={tempImg} w={120} h={120} radius="sm" />
       <Group
         ref={ref}
