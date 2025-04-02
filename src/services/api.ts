@@ -1,4 +1,5 @@
 import axios, { AxiosInstance, AxiosPromise } from "axios";
+import { User } from "../components/Header";
 import { LoginRequest, LoginResponse } from "../schemas/auth";
 import { Food } from "../schemas/menu";
 
@@ -38,6 +39,22 @@ class APIService {
   removeHeaderToken() {
     delete this.axiosInstance.defaults.headers.common.Authorization;
     localStorage.removeItem("accessToken");
+  }
+
+  getOrCreateUser() {}
+
+  static async fetchGoogleUserData(token: string): Promise<User> {
+    const { data } = await axios.get(
+      "https://www.googleapis.com/oauth2/v1/userinfo",
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          Accept: "application/json",
+        },
+      }
+    );
+
+    return data;
   }
 }
 

@@ -1,59 +1,54 @@
 import { Anchor, Button, Group, Indicator, Text } from "@mantine/core";
 import { TokenResponse, useGoogleLogin } from "@react-oauth/google";
-import axios from "axios";
 import { ShoppingCart } from "lucide-react";
-import { useContext, useEffect, useState } from "react";
+import { useContext } from "react";
 import { useNavigate } from "react-router";
 import { CartContext } from "../contexts/CartContext";
+import APIService from "../services/api";
 
-type UserTokenResponse = Omit<
+export type UserTokenResponse = Omit<
   TokenResponse,
   "error" | "error_description" | "error_uri"
 >;
 
+export type User = {
+  email: string;
+  family_name: string;
+  given_name: string;
+  id: string;
+  name: string;
+  picture: string;
+  verified_email: boolean;
+};
+
 export const Header = () => {
   const { cartItems, setCartOpened } = useContext(CartContext);
-  const [user, setUser] = useState<UserTokenResponse>();
   const navigate = useNavigate();
 
   const openCart = () => {
     setCartOpened(true);
   };
 
-  const login = useGoogleLogin({
-    onSuccess: (tokenResponse) => {
-      setUser(tokenResponse);
-      console.log(tokenResponse);
+  const handleLogin = useGoogleLogin({
+    onSuccess: async ({ access_token }) => {
+      const API = new APIService();
+      const { email, name, picture } = await APIService.fetchGoogleUserData(
+        access_token
+      );
+
+      try {
+        const { data } = await API.login({ email, name, picture });
+        API.setHeaderToken(data.accessToken);
+      } catch (error) {
+        console.error(error);
+      }
+    },
+    onError: (error) => {
+      console.log("error ", error);
     },
   });
 
-  useEffect(() => {
-    const fetchUserData = async () => {
-      if (user) {
-        try {
-          const { data } = await axios.get(
-            `https://www.googleapis.com/oauth2/v1/userinfo?access_token=${user.access_token}`,
-            {
-              headers: {
-                Authorization: `Bearer ${user.access_token}`,
-                Accept: "application/json",
-              },
-            }
-          );
-
-          setUser(data);
-        } catch (error) {
-          console.log(error);
-        }
-      }
-    };
-
-    fetchUserData();
-  }, [user]);
-
-  const onLoginWithGoogle = () => login();
-
-  console.log("user ", user);
+  const onGoogleLogin = () => handleLogin();
 
   return (
     <header className="sticky shrink-0 top-0 p-2 bg-secondary w-full flex justify-between items-center z-10">
@@ -66,7 +61,7 @@ export const Header = () => {
             Order Now
           </Text>
         </Anchor>
-        <Button onClick={onLoginWithGoogle}>Log in</Button>
+        <Button onClick={onGoogleLogin}>Log in</Button>
         <div onClick={openCart} className="cursor-pointer">
           {cartItems.length !== 0 && (
             <Indicator
