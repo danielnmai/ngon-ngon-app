@@ -4,6 +4,8 @@ import { ShoppingCart } from "lucide-react";
 import { useContext } from "react";
 import { useNavigate } from "react-router";
 import { CartContext } from "../contexts/CartContext";
+
+import { AuthContext } from "../contexts/AuthContext";
 import APIService from "../services/api";
 
 export type UserTokenResponse = Omit<
@@ -11,7 +13,7 @@ export type UserTokenResponse = Omit<
   "error" | "error_description" | "error_uri"
 >;
 
-export type User = {
+export type GoogleUser = {
   email: string;
   family_name: string;
   given_name: string;
@@ -23,6 +25,7 @@ export type User = {
 
 export const Header = () => {
   const { cartItems, setCartOpened } = useContext(CartContext);
+  const { loginUser } = useContext(AuthContext);
   const navigate = useNavigate();
 
   const openCart = () => {
@@ -30,15 +33,16 @@ export const Header = () => {
   };
 
   const handleLogin = useGoogleLogin({
-    onSuccess: async ({ access_token }) => {
+    onSuccess: async ({ code }) => {
       const API = new APIService();
-      const { email, name, picture } = await APIService.fetchGoogleUserData(
-        access_token
-      );
+
+      console.log("code ", code);
 
       try {
-        const { data } = await API.login({ email, name, picture });
-        API.setHeaderToken(data.accessToken);
+        const { data } = await API.login({ code });
+        const { tokens, user } = data;
+
+        loginUser(user, tokens);
       } catch (error) {
         console.error(error);
       }
@@ -46,6 +50,7 @@ export const Header = () => {
     onError: (error) => {
       console.log("error ", error);
     },
+    flow: "auth-code",
   });
 
   const onGoogleLogin = () => handleLogin();

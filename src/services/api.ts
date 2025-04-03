@@ -1,6 +1,5 @@
 import axios, { AxiosInstance, AxiosPromise } from "axios";
-import { User } from "../components/Header";
-import { LoginRequest, LoginResponse } from "../schemas/auth";
+import { LoginRequest, LoginResponse, TokensType } from "../schemas/auth";
 import { Food } from "../schemas/menu";
 
 class APIService {
@@ -15,11 +14,17 @@ class APIService {
       },
     });
 
-    this.axiosInstance.interceptors.request.use((config) => {
-      const token = localStorage.getItem("accessToken");
-      config.headers.Authorization = token ? `Bearer ${token}` : "";
+    this.axiosInstance.interceptors.request.use((request) => {
+      const storedTokens = localStorage.getItem("tokens");
 
-      return config;
+      if (!storedTokens) return request;
+
+      // get the JWT from local storage
+      const tokens: TokensType = JSON.parse(storedTokens);
+      const jwtToken = tokens.id_token;
+      request.headers.Authorization = `Bearer ${jwtToken}`;
+
+      return request;
     });
   }
 
@@ -31,30 +36,8 @@ class APIService {
     return this.axiosInstance.get("/foods");
   }
 
-  setHeaderToken(token: string) {
-    this.axiosInstance.defaults.headers.common.Authorization = `Bearer ${token}`;
-    localStorage.setItem("accessToken", token);
-  }
-
-  removeHeaderToken() {
-    delete this.axiosInstance.defaults.headers.common.Authorization;
-    localStorage.removeItem("accessToken");
-  }
-
-  getOrCreateUser() {}
-
-  static async fetchGoogleUserData(token: string): Promise<User> {
-    const { data } = await axios.get(
-      "https://www.googleapis.com/oauth2/v1/userinfo",
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          Accept: "application/json",
-        },
-      }
-    );
-
-    return data;
+  fetchUser(userId: string) {
+    return this.axiosInstance.get(`/users/${userId}`);
   }
 }
 

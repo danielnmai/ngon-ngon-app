@@ -1,15 +1,23 @@
 import { z } from "zod";
+import { UserSchema } from "./user";
 
-const LoginRequest = z.object({
-  email: z.string().email(),
-  name: z.string(),
-  picture: z.string(),
+export const TokensSchema = z.object({
+  access_token: z.string(),
+  refresh_token: z.string(),
+  scope: z.string(),
+  id_token: z.string(),
+  expiry_date: z.number(),
 });
 
-const LoginResponse = z.object({
-  accessToken: z.string(),
-  userId: z.number(),
+export const LoginRequestSchema = z.object({
+  code: z.string(),
 });
 
-export type LoginRequest = z.infer<typeof LoginRequest>;
-export type LoginResponse = z.infer<typeof LoginResponse>;
+export const LoginResponseSchema = z.object({
+  user: UserSchema,
+  tokens: TokensSchema,
+});
+
+export type LoginRequest = z.infer<typeof LoginRequestSchema>;
+export type LoginResponse = z.infer<typeof LoginResponseSchema>;
+export type TokensType = z.infer<typeof TokensSchema>;
