@@ -1,6 +1,6 @@
-import { Anchor, Button, Group, Indicator, Text } from "@mantine/core";
+import { Anchor, Avatar, Group, Indicator, Text } from "@mantine/core";
 import { TokenResponse, useGoogleLogin } from "@react-oauth/google";
-import { ShoppingCart } from "lucide-react";
+import { CircleUserRound, ShoppingCart } from "lucide-react";
 import { useContext } from "react";
 import { useNavigate } from "react-router";
 import { CartContext } from "../contexts/CartContext";
@@ -25,7 +25,7 @@ export type GoogleUser = {
 
 export const Header = () => {
   const { cartItems, setCartOpened } = useContext(CartContext);
-  const { loginUser } = useContext(AuthContext);
+  const { loginUser, user, logoutUser } = useContext(AuthContext);
   const navigate = useNavigate();
 
   const openCart = () => {
@@ -35,8 +35,6 @@ export const Header = () => {
   const handleLogin = useGoogleLogin({
     onSuccess: async ({ code }) => {
       const API = new APIService();
-
-      console.log("code ", code);
 
       try {
         const { data } = await API.login({ code });
@@ -61,12 +59,29 @@ export const Header = () => {
         Ngon Ngon
       </Text>
       <Group className="mr-4">
-        <Anchor variant="outline" href="#menu" className="no-underline">
+        <Anchor variant="outline" href="#menu" className="no-underline mr-4">
           <Text className="text-primary hover:bg-primary hover:text-white px-2 py-1 rounded-sm border-1">
             Order Now
           </Text>
         </Anchor>
-        <Button onClick={onGoogleLogin}>Log in</Button>
+        {user ? (
+          <Group className="cursor-pointer">
+            <Avatar src={user.picture} size="sm" />
+            <Text
+              className="text-primary hover:opacity-75 border-primary p-1"
+              onClick={() => logoutUser()}
+            >
+              Log Out
+            </Text>
+          </Group>
+        ) : (
+          <Group className="cursor-pointer" onClick={onGoogleLogin}>
+            <CircleUserRound color="var(--color-primary)" />
+            <Text className="text-primary hover:opacity-75 border-primary p-1">
+              Log In
+            </Text>
+          </Group>
+        )}
         <div onClick={openCart} className="cursor-pointer">
           {cartItems.length !== 0 && (
             <Indicator
