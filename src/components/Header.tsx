@@ -1,6 +1,6 @@
 import { Anchor, Avatar, Group, Indicator, Text } from "@mantine/core";
 import { TokenResponse, useGoogleLogin } from "@react-oauth/google";
-import { CircleUserRound, ShoppingCart } from "lucide-react";
+import { ShoppingCart } from "lucide-react";
 import { useContext } from "react";
 import { useNavigate } from "react-router";
 import { CartContext } from "../contexts/CartContext";
@@ -65,8 +65,13 @@ export const Header = () => {
           </Text>
         </Anchor>
         {user ? (
-          <Group className="cursor-pointer">
-            <Avatar src={user.picture} size="sm" />
+          <Group>
+            <img
+              src={user.picture}
+              className="w-8 rounded-2xl"
+              alt="user-profile-picture"
+              referrerPolicy="no-referrer"
+            />
             <Text
               className="text-primary hover:opacity-75 border-primary p-1"
               onClick={() => logoutUser()}
@@ -76,7 +81,7 @@ export const Header = () => {
           </Group>
         ) : (
           <Group className="cursor-pointer" onClick={onGoogleLogin}>
-            <CircleUserRound color="var(--color-primary)" />
+            <Avatar size="sm" color="var(--color-primary)" />
             <Text className="text-primary hover:opacity-75 border-primary p-1">
               Log In
             </Text>
