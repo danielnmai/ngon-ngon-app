@@ -24,7 +24,7 @@ const MenuItem = ({ food }: MenuItemProps) => {
       <Stack className="m-4">
         <Paper
           onClick={handleModalOpen}
-          className="flex justify-end items-end bg-[url('src/assets/pictures/bun-dau-mam-tom.jpg')] bg-cover bg-center min-w-[20rem] h-40 hover:cursor-pointer"
+          className="flex justify-end items-end bg-[url('src/assets/pictures/bun-dau-mam-tom.jpg')] bg-cover bg-center min-w-[18rem] h-40 hover:cursor-pointer"
           radius="lg"
         >
           <div className="flex justify-center items-center h-8 w-8 rounded-full bg-white m-4">

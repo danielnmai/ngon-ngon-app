@@ -22,7 +22,7 @@ const Menu = () => {
 
   return (
     <section id="menu" className="flex justify-center items-center">
-      <Container className="pt-12 ml-4 mr-4 h-full max-w-[1920px]">
+      <Container className="pt-12 ml-4 mr-4 h-full">
         <Title className="font-cormorant text-primary" order={1}>
           ORDER ONLINE
         </Title>
