@@ -44,6 +44,7 @@ const OrderModal = ({ food, opened, onClose }: ModalProps) => {
       name: food.name,
       optionPrice: selectedOption.price,
       optionQuantity: selectedOption.minQuantity,
+      photo: food.photos[0],
     },
   });
 

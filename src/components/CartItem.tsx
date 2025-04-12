@@ -2,7 +2,6 @@ import { Group, Image, Stack, Text } from "@mantine/core";
 import { useElementSize } from "@mantine/hooks";
 import { Trash2 } from "lucide-react";
 import { ChangeEvent, useContext } from "react";
-import tempImg from "../assets/pictures/bun-dau-mam-tom.jpg";
 import { CartContext, CartItemType } from "../contexts/CartContext";
 import { centsToDollar } from "../utils";
 import ItemQuantityInput from "./ItemQuantityInput";
@@ -50,7 +49,7 @@ const CartItem = ({ item }: CartItemProps) => {
 
   return (
     <Group className="h-fit w-full flex-nowrap justify-between my-2">
-      <Image src={tempImg} w={120} h={120} radius="sm" />
+      <Image src={item.photo} w={120} h={120} radius="sm" />
       <Group
         ref={ref}
         className={`w-full items-start
