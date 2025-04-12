@@ -151,7 +151,7 @@ const OrderModal = ({ food, opened, onClose }: ModalProps) => {
         <Stack>
           <Title order={3}>{food.name}</Title>
           <Text>{food.description}</Text>
-          <Image src="src/assets/pictures/bun-dau-mam-tom.jpg" />
+          <Image src={food.photos[0]} radius='md' />
         </Stack>
         <form onSubmit={form.onSubmit(handleSubmit)}>
           <Radio.Group

@@ -14,6 +14,7 @@ const FoodSchema = z.object({
   description: z.string(),
   price: z.number(),
   options: z.array(FoodOptionSchema),
+  photos: z.array(z.string()),
 });
 
 export type Food = z.infer<typeof FoodSchema>;

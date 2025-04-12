@@ -1,6 +1,5 @@
-import { Paper, Stack, Text, Title } from "@mantine/core";
+import { Image, Stack, Text, Title } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
-import { Plus } from "lucide-react";
 import { Food } from "../schemas/menu";
 import OrderModal from "./OrderModal";
 
@@ -22,15 +21,7 @@ const MenuItem = ({ food }: MenuItemProps) => {
   return (
     <>
       <Stack className="m-4">
-        <Paper
-          onClick={handleModalOpen}
-          className="flex justify-end items-end bg-[url('src/assets/pictures/bun-dau-mam-tom.jpg')] bg-cover bg-center min-w-[18rem] h-40 hover:cursor-pointer"
-          radius="lg"
-        >
-          <div className="flex justify-center items-center h-8 w-8 rounded-full bg-white m-4">
-            <Plus className="h-4 w-4" />
-          </div>
-        </Paper>
+        <Image src={food.photos[0]} alt={food.name} className="h-40 w-full object-cover rounded-lg cursor-pointer" onClick={handleModalOpen}/>
         <Title order={4}>{food.name}</Title>
         <Text c="gray">{food.description}</Text>
         <Text>{food.price}</Text>
