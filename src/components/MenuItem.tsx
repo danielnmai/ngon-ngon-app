@@ -1,4 +1,4 @@
-import { Image, Stack, Text, Title } from "@mantine/core";
+import { Stack, Text, Title } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { Food } from "../schemas/menu";
 import OrderModal from "./OrderModal";
@@ -21,7 +21,7 @@ const MenuItem = ({ food }: MenuItemProps) => {
   return (
     <>
       <Stack className="m-4">
-        <Image src={food.photos[0]} alt={food.name} className="h-40 w-full object-cover rounded-lg cursor-pointer" onClick={handleModalOpen}/>
+        <img src={food.photos[0]} alt={food.name} className="h-50 object-cover rounded-lg cursor-pointer" onClick={handleModalOpen} />
         <Title order={4}>{food.name}</Title>
         <Text c="gray">{food.description}</Text>
         <Text>{food.price}</Text>

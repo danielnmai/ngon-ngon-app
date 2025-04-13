@@ -29,7 +29,7 @@ const Menu = () => {
         <Title order={3} className="font-cormorant text-primary">
           We cook fresh for each order, minimum preparation time is 3 hours.
         </Title>
-        <SimpleGrid cols={{ base: 1, sm: 2, lg: 3 }}>
+        <SimpleGrid cols={{ base: 1, sm: 2, lg: 3 }} >
           {data.map((foodItem) => (
             <MenuItem food={foodItem} key={foodItem.id} />
           ))}

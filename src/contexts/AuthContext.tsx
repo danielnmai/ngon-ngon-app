@@ -1,4 +1,3 @@
-import axios from "axios";
 import dayjs from "dayjs";
 import { createContext, ReactNode, useEffect, useState } from "react";
 import { TokensType } from "../schemas/auth";
@@ -26,9 +25,6 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
     setUser(user);
     localStorage.setItem("user", JSON.stringify(user));
     localStorage.setItem("tokens", JSON.stringify(tokens));
-    axios.defaults.headers.common[
-      "Authorization"
-    ] = `Bearer ${tokens.id_token}`;
   };
 
   const logoutUser = () => {
@@ -36,7 +32,6 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
     localStorage.removeItem("user");
     localStorage.removeItem("tokens");
     localStorage.removeItem("cartItems");
-    axios.defaults.headers.common["Authorization"] = "";
   };
 
   useEffect(() => {
