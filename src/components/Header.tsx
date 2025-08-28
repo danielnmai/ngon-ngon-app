@@ -2,7 +2,7 @@ import { Anchor, Avatar, Group, Indicator, Text } from "@mantine/core";
 import { TokenResponse, useGoogleLogin } from "@react-oauth/google";
 import { ShoppingCart } from "lucide-react";
 import { useContext } from "react";
-import { useNavigate } from "react-router";
+import { useLocation, useNavigate } from "react-router";
 import { CartContext } from "../contexts/CartContext";
 
 import { AuthContext } from "../contexts/AuthContext";
@@ -27,8 +27,13 @@ export const Header = () => {
   const { cartItems, setCartOpened } = useContext(CartContext);
   const { loginUser, user, logoutUser } = useContext(AuthContext);
   const navigate = useNavigate();
+  const location = useLocation();
 
   const openCart = () => {
+    if (location.pathname !== '/') {
+      return;
+    }
+
     setCartOpened(true);
   };
 
@@ -73,16 +78,16 @@ export const Header = () => {
               referrerPolicy="no-referrer"
             />
             <Text
-              className="text-primary hover:opacity-75 border-primary p-1"
+              className="text-primary hover:opacity-75 border-primary p-1 cursor-pointer"
               onClick={() => logoutUser()}
             >
               Log Out
             </Text>
           </Group>
         ) : (
-          <Group className="cursor-pointer" onClick={onGoogleLogin}>
+          <Group className="cursor-pointer">
             <Avatar size="sm" color="var(--color-primary)" />
-            <Text className="text-primary hover:opacity-75 border-primary p-1">
+            <Text className="text-primary hover:opacity-75 border-primary p-1" onClick={onGoogleLogin}>
               Log In
             </Text>
           </Group>

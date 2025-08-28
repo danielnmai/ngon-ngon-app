@@ -31,8 +31,8 @@ const CartDrawer = () => {
   };
 
   const handleViewCart = () => {
-    navigate("/cart");
     setCartOpened(false);
+    navigate("/cart");
   };
 
   const cartTotal = getCartTotal();
