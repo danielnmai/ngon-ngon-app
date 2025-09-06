@@ -6,6 +6,7 @@ const FoodOptionSchema = z.object({
   price: z.number(),
   minQuantity: z.number(),
   foodId: z.number(),
+  stripePriceId: z.string(),
 });
 
 const FoodSchema = z.object({

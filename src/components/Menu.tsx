@@ -19,7 +19,7 @@ const Menu = () => {
   if (isPending) return <div>Loading...</div>;
 
   if (error) return <div>Error: {error.message}</div>;
-
+  
   return (
     <section id="menu" className="flex justify-center items-center">
       <Container className="pt-12 ml-4 mr-4 h-full">
