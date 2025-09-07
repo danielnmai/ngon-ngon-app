@@ -37,8 +37,8 @@ function App() {
 			<GoogleOAuthProvider clientId="84030187879-glv8pcq0q4brg0q0d2c9ch35hhvgpr4h.apps.googleusercontent.com">
 				<MantineProvider theme={theme}>
 					<BrowserRouter>
-						<CartProvider>
-							<AuthContextProvider>
+						<AuthContextProvider>
+							<CartProvider>
 								<main className="flex flex-col min-h-screen">
 									<Header />
 									<div className="grow">
@@ -50,8 +50,8 @@ function App() {
 									</div>
 									<Footer />
 								</main>
-							</AuthContextProvider>
-						</CartProvider>
+							</CartProvider>
+						</AuthContextProvider>
 					</BrowserRouter>
 				</MantineProvider>
 			</GoogleOAuthProvider>

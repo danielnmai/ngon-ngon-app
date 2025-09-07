@@ -9,36 +9,28 @@ import {
 } from "@mantine/core";
 import { useMutation } from "@tanstack/react-query";
 import { Lock } from "lucide-react";
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 import CartItem from "../components/CartItem";
 import { CartContext } from "../contexts/CartContext";
 import APIService from "../services/api";
 import { centsToDollar } from "../utils";
+import { AuthContext } from "../contexts/AuthContext";
+import { Order } from "../schemas/order";
 
 const Cart = () => {
 	const { cartItems, getCartTotal } = useContext(CartContext);
+	const { user } = useContext(AuthContext);
 	const API = new APIService();
 
 	const total = getCartTotal();
 
-	const createCheckoutSession = async () => {
-		const response = await API.createCheckoutSession(cartItems);
+	const createCheckoutSession = async (order: Order) => {
+		const response = await API.createCheckoutSession(order);
 
 		return response.data;
 	};
 
-	useEffect(() => {
-		const query = new URLSearchParams(window.location.search);
-		if (query.get("success")) {
-			console.log("Order placed! You will receive an email confirmation.");
-		}
-
-		if (query.get("canceled")) {
-			console.log("Order canceled.");
-		}
-	}, []);
-
-	const { mutate, data, error, isError } = useMutation({
+	const { mutate, data, isPending } = useMutation({
 		mutationFn: createCheckoutSession,
 		onError: (error) => {
 			console.error("Mutation error:", error);
@@ -46,7 +38,16 @@ const Cart = () => {
 	});
 
 	const handleCheckout = () => {
-		mutate();
+		const order: Order = {
+			lineItems: cartItems,
+			total,
+			paymentType: "STRIPE",
+			description: "Order from Ngon Ngon",
+			userId: user!.id,
+			paymentStatus: false,
+		};
+
+		mutate(order);
 	};
 
 	if (data && data.url) {
@@ -87,6 +88,7 @@ const Cart = () => {
 								size="lg"
 								color="var(--color-primary)"
 								onClick={() => handleCheckout()}
+								loading={isPending}
 							>
 								Checkout
 							</Button>

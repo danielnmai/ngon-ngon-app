@@ -29,9 +29,9 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
 
 	const logoutUser = () => {
 		setUser(null);
+		localStorage.removeItem("cartItems");
 		localStorage.removeItem("user");
 		localStorage.removeItem("tokens");
-		localStorage.removeItem("cartItems");
 	};
 
 	useEffect(() => {
@@ -49,7 +49,7 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
 				console.log("token is not expired");
 			}
 		}
-	}, []);
+	});
 
 	return (
 		<AuthContext.Provider value={{ user, loginUser, logoutUser }}>

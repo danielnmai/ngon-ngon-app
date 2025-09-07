@@ -2,6 +2,8 @@ import axios, { type AxiosInstance, type AxiosPromise } from "axios";
 import type { CartItemType } from "../contexts/CartContext";
 import type { LoginRequest, LoginResponse, TokensType } from "../schemas/auth";
 import type { Food } from "../schemas/menu";
+import { Order } from "../pages/Cart";
+import { PaymentStatus } from "../schemas/order";
 
 class APIService {
 	BASE_URL = "http://localhost:3000/v1";
@@ -41,8 +43,12 @@ class APIService {
 		return this.axiosInstance.get(`/users/${userId}`);
 	}
 
-	createCheckoutSession(lineItems: CartItemType[]) {
-		return this.axiosInstance.post("/orders/checkout-sessions", { lineItems });
+	createCheckoutSession(order: Order) {
+		return this.axiosInstance.post("/orders/checkout-sessions", order);
+	}
+
+	updateOrderPaymentStatus(orderId: string, paymentStatus: PaymentStatus) {
+		return this.axiosInstance.patch(`/orders/${orderId}`, { paymentStatus });
 	}
 }
 
