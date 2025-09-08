@@ -23,7 +23,7 @@ export type GoogleUser = {
 };
 
 export const Header = () => {
-	const { cartItems, setCartOpened } = useContext(CartContext);
+	const { cartItems, setCartOpened, clearCart } = useContext(CartContext);
 	const { loginUser, user, logoutUser } = useContext(AuthContext);
 	const navigate = useNavigate();
 	const location = useLocation();
@@ -35,6 +35,11 @@ export const Header = () => {
 
 		setCartOpened(true);
 	};
+
+  const handleLogout = () => {
+    logoutUser();
+    clearCart();
+  }
 
 	const handleLogin = useGoogleLogin({
 		onSuccess: async ({ code }) => {
@@ -78,7 +83,7 @@ export const Header = () => {
 						/>
 						<Text
 							className="text-primary hover:opacity-75 border-primary p-1 cursor-pointer"
-							onClick={() => logoutUser()}
+							onClick={handleLogout}
 						>
 							Log Out
 						</Text>
