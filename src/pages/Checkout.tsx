@@ -7,6 +7,7 @@ import {
 	Card,
 	Center,
 	Container,
+	Flex,
 	Group,
 	Paper,
 	Stack,
@@ -53,14 +54,14 @@ const Checkout = () => {
 	if (success === "true") {
 		return (
 			<Center m={20}>
-				<Stack>
-					<Paper withBorder p={20} m={0} shadow="md">
+				<Stack align="center">
+					<Paper withBorder p={20} m={20} shadow="md">
 						<Center>
 							<Title size={"h3"} my={20}>
 								Your order is confirmed!
 							</Title>
 						</Center>
-						<Group>
+						<Flex>
 							<Container>
 								<Text my={2}>Order number:</Text>
 								<Text my={2}>Order created:</Text>
@@ -82,7 +83,7 @@ const Checkout = () => {
 								</Text>
 								<Text my={2}>{order?.description}</Text>
 							</Container>
-						</Group>
+						</Flex>
 					</Paper>
 
 					<Container>
