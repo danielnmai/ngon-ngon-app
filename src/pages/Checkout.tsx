@@ -1,43 +1,106 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router";
 import APIService from "../services/api";
-import { PaymentStatus } from "../schemas/order";
+import { OrderResponse, PaymentStatus } from "../schemas/order";
 import { useMutation } from "@tanstack/react-query";
-import { Container, Text } from "@mantine/core";
+import {
+	Card,
+	Center,
+	Container,
+	Group,
+	Paper,
+	Stack,
+	Text,
+	Title,
+} from "@mantine/core";
+import { centsToDollar } from "../utils";
+import dayjs from "dayjs";
 
 const Checkout = () => {
 	const [searchParams] = useSearchParams();
 	const success = searchParams.get("success");
 	const orderId = searchParams.get("orderId");
+	const [order, setOrder] = useState<OrderResponse | null>(null);
 	const API = new APIService();
 
-	const updateOrderPaymentStatus = ({
+	const updateOrder = async ({
 		orderId,
 		paymentStatus,
 	}: {
-		orderId: string;
+		orderId: number;
 		paymentStatus: PaymentStatus;
-	}) => API.updateOrderPaymentStatus(orderId, paymentStatus);
+	}) => {
+		const { data } = await API.updateOrder({ id: orderId, paymentStatus });
+		setOrder(data);
+
+		return data;
+	};
 
 	const { mutate } = useMutation({
-		mutationFn: updateOrderPaymentStatus,
+		mutationFn: updateOrder,
 	});
 
 	useEffect(() => {
-    if(!orderId) return;
+		if (!orderId) return;
 
 		if (success === "true") {
-			mutate({ orderId, paymentStatus: "SUCCESS" });
+			mutate({ orderId: +orderId, paymentStatus: "SUCCESS" });
 		} else if (success === "false") {
-			mutate({ orderId, paymentStatus: "FAILED" });
+			mutate({ orderId: +orderId, paymentStatus: "FAILED" });
 		}
 	}, [mutate, success, orderId]);
 
 	if (success === "true") {
 		return (
-			<Container mt={10}>
-				<Text>Payment Successful. Please check your email for the receipt.</Text>
-			</Container>
+			<Center m={20}>
+				<Stack>
+					<Paper withBorder p={20} m={0} shadow="md">
+						<Center>
+							<Title size={"h3"} my={20}>
+								Your order is confirmed!
+							</Title>
+						</Center>
+						<Group>
+							<Container>
+								<Text my={2}>Order number:</Text>
+								<Text my={2}>Order created:</Text>
+								<Text my={2}>Payment type:</Text>
+								<Text my={2}>Payment status:</Text>
+								<Text my={2}>Total amount:</Text>
+								<Text my={2}>Description:</Text>
+							</Container>
+							<Container>
+								<Text my={2}>{order?.id}</Text>
+								<Text my={2}>
+									{order?.createdAt &&
+										dayjs(order.createdAt).format("MMMM D, YYYY h:mm A")}
+								</Text>
+								<Text my={2}>{order?.paymentType}</Text>
+								<Text my={2}>{order?.paymentStatus}</Text>
+								<Text my={2}>
+									{order?.total ? centsToDollar(order.total) : 0}
+								</Text>
+								<Text my={2}>{order?.description}</Text>
+							</Container>
+						</Group>
+					</Paper>
+
+					<Container>
+						<Title size={"h3"}>Pick-up Instructions</Title>
+					</Container>
+					<Title size={"h4"}>
+						Please note: we cook to orders so please allow time for preparation.
+						The typical wait time are 2 to 4 hours.
+					</Title>
+					<Text>
+						Please call 916-467-4047 to confirm the order and pick-up time.
+					</Text>
+					<Text>
+						The pick-up location is at 5551 Martin Luther King Jr Blvd,
+						Sacramento, CA 95820
+					</Text>
+				</Stack>
+			</Center>
 		);
 	}
 
@@ -47,7 +110,7 @@ const Checkout = () => {
 				<Text>Payment Failed. Please try again.</Text>
 			</Container>
 		);
-  }
+	}
 };
 
 export default Checkout;

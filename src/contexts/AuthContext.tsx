@@ -1,5 +1,11 @@
 import dayjs from "dayjs";
-import { createContext, type ReactNode, useEffect, useState } from "react";
+import {
+	createContext,
+	type ReactNode,
+	useCallback,
+	useEffect,
+	useState,
+} from "react";
 import type { TokensType } from "../schemas/auth";
 import type { UserType } from "../schemas/user";
 
@@ -27,12 +33,12 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
 		localStorage.setItem("tokens", JSON.stringify(tokens));
 	};
 
-	const logoutUser = () => {
+	const logoutUser = useCallback(() => {
 		setUser(null);
 		localStorage.removeItem("cartItems");
 		localStorage.removeItem("user");
 		localStorage.removeItem("tokens");
-	};
+	}, []);
 
 	useEffect(() => {
 		const storedTokens = localStorage.getItem("tokens");
@@ -48,8 +54,11 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
 			} else {
 				console.log("token is not expired");
 			}
+			// no stored JWT, removing all stored data
+		} else {
+			logoutUser();
 		}
-	});
+	}, [logoutUser]);
 
 	return (
 		<AuthContext.Provider value={{ user, loginUser, logoutUser }}>

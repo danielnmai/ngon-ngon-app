@@ -44,7 +44,6 @@ const Cart = () => {
 			paymentType: "STRIPE",
 			description: "Order from Ngon Ngon",
 			userId: user!.id,
-			paymentStatus: false,
 		};
 
 		mutate(order);

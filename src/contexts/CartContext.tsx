@@ -42,8 +42,10 @@ import type { Size } from "../utils/constants";
 
 export const CartProvider = ({ children }: { children: ReactNode }) => {
 	const storedCartItems = localStorage.getItem("cartItems");
+	const storedUser = localStorage.getItem("user");
+
 	const [cartItems, setCartItems] = useState<CartItemType[]>(
-		storedCartItems ? JSON.parse(storedCartItems) : [],
+		storedCartItems && storedUser ? JSON.parse(storedCartItems) : [],
 	);
 	const [cartOpened, setCartOpened] = useState(false);
 
