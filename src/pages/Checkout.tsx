@@ -24,9 +24,11 @@ const Checkout = () => {
 	});
 
 	useEffect(() => {
-		if (success === "true" && orderId) {
+    if(!orderId) return;
+
+		if (success === "true") {
 			mutate({ orderId, paymentStatus: "SUCCESS" });
-		} else if (success === "false" && orderId) {
+		} else if (success === "false") {
 			mutate({ orderId, paymentStatus: "FAILED" });
 		}
 	}, [mutate, success, orderId]);
@@ -39,12 +41,12 @@ const Checkout = () => {
 		);
 	}
 
-  if(success === 'false') {
-    return (
-      <Container mt={20}>
-        <Text>Payment Failed. Please try again.</Text>
-      </Container>
-    );
+	if (success === "false") {
+		return (
+			<Container mt={20}>
+				<Text>Payment Failed. Please try again.</Text>
+			</Container>
+		);
   }
 };
 
