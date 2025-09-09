@@ -36,10 +36,10 @@ export const Header = () => {
 		setCartOpened(true);
 	};
 
-  const handleLogout = () => {
-    logoutUser();
-    clearCart();
-  }
+	const handleLogout = () => {
+		logoutUser();
+		clearCart();
+	};
 
 	const handleLogin = useGoogleLogin({
 		onSuccess: async ({ code }) => {

@@ -148,8 +148,11 @@ const OrderModal = ({ food, opened, onClose }: ModalProps) => {
 	};
 
 	return (
-		<Modal opened={opened} onClose={onClose} centered size="lg">
-			<Container my={8}>
+		<Modal opened={opened} onClose={onClose} centered size="lg" classNames={{
+      header: "bg-secondary",
+      content: "bg-secondary",
+    }}>
+			<Container my={8} className="bg-secondary">
 				<Stack>
 					<Title order={3}>{food.name}</Title>
 					<Text>{food.description}</Text>

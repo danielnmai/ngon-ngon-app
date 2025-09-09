@@ -4,6 +4,7 @@ import APIService from "../services/api";
 import { OrderResponse, PaymentStatus } from "../schemas/order";
 import { useMutation } from "@tanstack/react-query";
 import {
+  Anchor,
 	Card,
 	Center,
 	Container,
@@ -55,7 +56,7 @@ const Checkout = () => {
 		return (
 			<Center m={20}>
 				<Stack align="center">
-					<Paper withBorder p={20} m={20} shadow="md">
+					<Paper withBorder p={20} m={20} shadow="md" miw={400}>
 						<Center>
 							<Title size={"h3"} my={20}>
 								Your order is confirmed!
@@ -94,11 +95,12 @@ const Checkout = () => {
 						The typical wait time are 2 to 4 hours.
 					</Title>
 					<Text>
-						Please call 916-467-4047 to confirm the order and pick-up time.
+						Please call <Anchor fw={700} href="tel:916-467-4047">916-467-4047</Anchor> to confirm the order and pick-up
+						time.
 					</Text>
 					<Text>
-						The pick-up location is at 5551 Martin Luther King Jr Blvd,
-						Sacramento, CA 95820
+						The pick-up location is
+						<Anchor fw={700}href="https://maps.app.goo.gl/G7v7VsbLLkScz6E78"> 5551 Martin Luther King Jr Blvd, Sacramento, CA 95820</Anchor>
 					</Text>
 				</Stack>
 			</Center>
@@ -107,9 +109,9 @@ const Checkout = () => {
 
 	if (success === "false") {
 		return (
-			<Container mt={20}>
-				<Text>Payment Failed. Please try again.</Text>
-			</Container>
+			<Center mt={20}>
+				<Title size={"h3"}>Payment Failed. Please try again.</Title>
+			</Center>
 		);
 	}
 };
