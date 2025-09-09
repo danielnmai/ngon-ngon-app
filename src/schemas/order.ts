@@ -1,4 +1,4 @@
-import { CartItemType } from "../contexts/CartContext";
+import type { CartItemType } from "../contexts/CartContext";
 
 export type PaymentStatus = "SUCCESS" | "PENDING" | "FAILED";
 

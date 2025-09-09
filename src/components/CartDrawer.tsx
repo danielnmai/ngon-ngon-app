@@ -25,14 +25,14 @@ const CartDrawer = () => {
 		setCartOpened(false);
 	};
 
-	const handleCheckout = () => {
-		navigate("/checkout");
+	const handleCheckoutWithCash = () => {
+		navigate("/checkout", { state: { paymentType: "CASH" } });
 		setCartOpened(false);
 	};
 
-	const handleViewCart = () => {
+	const handleCheckoutWithCard = () => {
+		navigate("/checkout", { state: { paymentType: "CARD" } });
 		setCartOpened(false);
-		navigate("/cart");
 	};
 
 	const cartTotal = getCartTotal();
@@ -47,6 +47,10 @@ const CartDrawer = () => {
 			scrollAreaComponent={ScrollArea.Autosize}
 			closeButtonProps={{
 				size: "lg",
+			}}
+			classNames={{
+				content: "bg-secondary",
+				header: "bg-secondary",
 			}}
 		>
 			<Stack className="items-center">
@@ -73,18 +77,18 @@ const CartDrawer = () => {
 							w="100%"
 							size="lg"
 							color="var(--color-primary)"
-							onClick={handleCheckout}
+							onClick={handleCheckoutWithCash}
 						>
-							Checkout
+							Pay with Cash
 						</Button>
 						<Button
 							w="100%"
 							size="lg"
 							variant="outline"
 							color="var(--color-primary)"
-							onClick={handleViewCart}
+							onClick={handleCheckoutWithCard}
 						>
-							View Cart
+							Pay with Card
 						</Button>
 						<Group>
 							<Lock />

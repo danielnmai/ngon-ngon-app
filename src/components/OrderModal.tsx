@@ -60,7 +60,7 @@ const OrderModal = ({ food, opened, onClose }: ModalProps) => {
 	};
 
 	const handleDecrementQuantity = () => {
-		if (quantity == selectedOption.minQuantity) {
+		if (quantity === selectedOption.minQuantity) {
 			return;
 		}
 		const newQuantity = quantity - 1;
@@ -148,10 +148,16 @@ const OrderModal = ({ food, opened, onClose }: ModalProps) => {
 	};
 
 	return (
-		<Modal opened={opened} onClose={onClose} centered size="lg" classNames={{
-      header: "bg-secondary",
-      content: "bg-secondary",
-    }}>
+		<Modal
+			opened={opened}
+			onClose={onClose}
+			centered
+			size="lg"
+			classNames={{
+				header: "bg-secondary",
+				content: "bg-secondary",
+			}}
+		>
 			<Container my={8} className="bg-secondary">
 				<Stack>
 					<Title order={3}>{food.name}</Title>

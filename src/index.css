@@ -34,7 +34,7 @@ html {
 
 @theme {
 	--color-primary: #34704a;
-	--color-secondary: #fbffe8;
+	--color-secondary: #f9fce8;
 	--font-bebas: "Bebas Neue";
 	--font-cormorant: "Cormorant Garamond";
 	--font-helvetica: "Helvetica Neue";
@@ -45,5 +45,5 @@ html {
 body {
 	height: 100%;
 	font-family: "Roboto";
-	background-color: #fbffe8;
+	background-color: #f9fce8;
 }

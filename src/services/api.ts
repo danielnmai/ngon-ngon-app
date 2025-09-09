@@ -1,7 +1,11 @@
 import axios, { type AxiosInstance, type AxiosPromise } from "axios";
 import type { LoginRequest, LoginResponse, TokensType } from "../schemas/auth";
 import type { Food } from "../schemas/menu";
-import { Order, OrderResponse, PaymentStatus } from "../schemas/order";
+import {
+	type Order,
+	type OrderResponse,
+	PaymentStatus,
+} from "../schemas/order";
 
 class APIService {
 	BASE_URL = "http://localhost:3000/v1";

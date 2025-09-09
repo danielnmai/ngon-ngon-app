@@ -15,9 +15,15 @@ import { CartContext } from "../contexts/CartContext";
 import APIService from "../services/api";
 import { centsToDollar } from "../utils";
 import { AuthContext } from "../contexts/AuthContext";
-import { Order } from "../schemas/order";
+import type { Order } from "../schemas/order";
 
-const Cart = () => {
+type PaymentType = "CARD" | "CASH";
+
+type CartProps = {
+	paymentType: PaymentType;
+};
+
+const Cart = ({ paymentType }: CartProps) => {
 	const { cartItems, getCartTotal } = useContext(CartContext);
 	const { user } = useContext(AuthContext);
 	const API = new APIService();
@@ -37,7 +43,7 @@ const Cart = () => {
 		},
 	});
 
-	const handleCheckout = () => {
+	const handleCardCheckout = () => {
 		const order: Order = {
 			lineItems: cartItems,
 			total,
@@ -48,6 +54,10 @@ const Cart = () => {
 
 		mutate(order);
 	};
+
+  const handleCashCheckout = () => {
+    console.log('Call to order with cash');
+  }
 
 	if (data && data.url) {
 		window.location.href = data.url;
@@ -82,19 +92,35 @@ const Cart = () => {
 									{centsToDollar(total)}
 								</Text>
 							</Group>
-							<Button
-								w="100%"
-								size="lg"
-								color="var(--color-primary)"
-								onClick={() => handleCheckout()}
-								loading={isPending}
-							>
-								Checkout
-							</Button>
-							<Group>
-								<Lock />
-								<Text>Secure checkout with Stripe</Text>
-							</Group>
+							{paymentType === "CARD" ? (
+								<>
+									<Button
+										w="100%"
+										size="lg"
+										color="var(--color-primary)"
+										onClick={() => handleCardCheckout()}
+										loading={isPending}
+									>
+										Checkout
+									</Button>
+									<Group>
+										<Lock />
+										<Text>Secure checkout with Stripe</Text>
+									</Group>
+								</>
+							) : (
+								<>
+									<Button
+										w="100%"
+										size="lg"
+										color="var(--color-primary)"
+										onClick={() => handleCashCheckout()}
+										loading={isPending}
+									>
+										Call to Order
+									</Button>
+								</>
+							)}
 						</Stack>
 					</Stack>
 				</Container>
