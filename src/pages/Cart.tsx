@@ -11,11 +11,11 @@ import { useMutation } from "@tanstack/react-query";
 import { Lock } from "lucide-react";
 import { useContext } from "react";
 import CartItem from "../components/CartItem";
+import { AuthContext } from "../contexts/AuthContext";
 import { CartContext } from "../contexts/CartContext";
+import type { Order } from "../schemas/order";
 import APIService from "../services/api";
 import { centsToDollar } from "../utils";
-import { AuthContext } from "../contexts/AuthContext";
-import type { Order } from "../schemas/order";
 
 type PaymentType = "CARD" | "CASH";
 
@@ -44,22 +44,24 @@ const Cart = ({ paymentType }: CartProps) => {
 	});
 
 	const handleCardCheckout = () => {
+		if (!user) return;
+
 		const order: Order = {
 			lineItems: cartItems,
 			total,
 			paymentType: "STRIPE",
 			description: "Order from Ngon Ngon",
-			userId: user!.id,
+			userId: user.id,
 		};
 
 		mutate(order);
 	};
 
-  const handleCashCheckout = () => {
-    console.log('Call to order with cash');
-  }
+	const handleCashCheckout = () => {
+		console.log('handling cash checkout. Customer is supposed to call the number to order');
+	};
 
-	if (data && data.url) {
+	if (data?.url) {
 		window.location.href = data.url;
 	}
 
@@ -109,17 +111,17 @@ const Cart = ({ paymentType }: CartProps) => {
 									</Group>
 								</>
 							) : (
-								<>
-									<Button
-										w="100%"
-										size="lg"
-										color="var(--color-primary)"
-										onClick={() => handleCashCheckout()}
-										loading={isPending}
-									>
-										Call to Order
-									</Button>
-								</>
+								<Button
+									w="100%"
+									size="lg"
+									color="var(--color-primary)"
+									onClick={() => handleCashCheckout()}
+									loading={isPending}
+									component="a"
+									href="tel:916-467-4047"
+								>
+									Call (916) 467-4047 to Order
+								</Button>
 							)}
 						</Stack>
 					</Stack>

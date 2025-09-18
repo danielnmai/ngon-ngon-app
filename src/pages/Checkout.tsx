@@ -1,10 +1,11 @@
-import { useEffect, useState } from "react";
-import { useLocation, useSearchParams } from "react-router";
-import APIService from "../services/api";
-import type { OrderResponse, PaymentStatus } from "../schemas/order";
 import { useMutation } from "@tanstack/react-query";
+import { useContext, useEffect, useState } from "react";
+import { useLocation, useSearchParams } from "react-router";
 import OrderResult, { PickupInstructions } from "../components/OrderResult";
+import { CartContext } from "../contexts/CartContext";
 import Cart from "../pages//Cart";
+import type { OrderResponse, PaymentStatus } from "../schemas/order";
+import APIService from "../services/api";
 
 const Checkout = () => {
 	const [searchParams] = useSearchParams();
@@ -13,7 +14,8 @@ const Checkout = () => {
 	const orderId = searchParams.get("orderId");
 	const [order, setOrder] = useState<OrderResponse | null>(null);
 	const API = new APIService();
-	const paymentType = location.state?.paymentType || 'CARD';
+	const paymentType = location.state?.paymentType || "CARD";
+	const { clearCart } = useContext(CartContext);
 
 	const updateOrder = async ({
 		orderId,
@@ -24,6 +26,7 @@ const Checkout = () => {
 	}) => {
 		const { data } = await API.updateOrder({ id: orderId, paymentStatus });
 		setOrder(data);
+		clearCart();
 
 		return data;
 	};
@@ -49,15 +52,15 @@ const Checkout = () => {
 	if (success === "false") {
 		return (
 			<>
-				<OrderResult success="false" order={order} />;
-				<Cart paymentType={paymentType}/>
+				<OrderResult success="false" order={order} />
+				<Cart paymentType={paymentType} />
 			</>
 		);
 	}
 
 	return (
 		<>
-			<Cart paymentType={paymentType}/>
+			<Cart paymentType={paymentType} />
 			{paymentType === "CASH" && (
 				<PickupInstructions title="Pick-up Instructions for Cash Payment" />
 			)}
