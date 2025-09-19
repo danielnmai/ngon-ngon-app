@@ -2,7 +2,7 @@ import { Button, Container, Overlay, Title } from "@mantine/core";
 
 export const Hero = () => {
 	return (
-		<div className="relative bg-[url('public/assets/pictures/bun-dau-mam-tom.jpg')] bg-cover bg-center">
+		<div className="relative bg-[url('/assets/pictures/bun-dau-mam-tom.jpg')] bg-cover bg-center">
 			<Overlay opacity={1} zIndex={0} />
 			<Container className="relative sm:h-[700px] h-[500px] flex flex-col justify-end items-start pb-20">
 				<Title className="font-bebas text-white sm:text-8xl text-4xl">

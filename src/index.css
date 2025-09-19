@@ -8,26 +8,26 @@
 
 @font-face {
 	font-family: "Bebas Neue";
-	src: url("../public/assets/fonts/BebasNeue-Regular.ttf");
+	src: url("/assets/fonts/BebasNeue-Regular.ttf");
 }
 
 @font-face {
 	font-family: "Cormorant Garamond";
-	src: url("../public/assets/fonts/CormorantGaramond-Medium.ttf");
+	src: url("/assets/fonts/CormorantGaramond-Medium.ttf");
 }
 
 @font-face {
 	font-family: "Helvetica Neue";
-	src: url("../public/assets/fonts/HelveticaNeueMedium.otf");
+	src: url("/assets/fonts/HelveticaNeueMedium.otf");
 }
 
 @font-face {
 	font-family: "Roboto";
-	src: url("../public/assets/fonts/Roboto-Regular.ttf");
+	src: url("/assets/fonts/Roboto-Regular.ttf");
 }
 
 html {
-	scroll-bkwehavior: smooth;
+	scroll-behavior: smooth;
 	margin: 0;
 	padding: 0;
 }
