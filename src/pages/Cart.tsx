@@ -72,8 +72,8 @@ const Cart = ({ paymentType }: CartProps) => {
 					<Stack>
 						<Text>My Cart</Text>
 						<div>
-							{cartItems.map((item, index) => (
-								<Container key={index}>
+							{cartItems.map((item) => (
+								<Container key={item.foodId}>
 									<Divider className="my-4" />
 									<CartItem item={item} />
 								</Container>
