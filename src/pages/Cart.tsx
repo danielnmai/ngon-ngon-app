@@ -58,7 +58,9 @@ const Cart = ({ paymentType }: CartProps) => {
 	};
 
 	const handleCashCheckout = () => {
-		console.log('handling cash checkout. Customer is supposed to call the number to order');
+		console.log(
+			"handling cash checkout. Customer is supposed to call the number to order",
+		);
 	};
 
 	if (data?.url) {
