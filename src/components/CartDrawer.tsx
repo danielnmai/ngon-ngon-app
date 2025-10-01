@@ -13,7 +13,6 @@ import {
 import { Lock } from "lucide-react";
 import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router";
-import { set } from "zod";
 import { AuthContext } from "../contexts/AuthContext";
 import { CartContext } from "../contexts/CartContext";
 import { centsToDollar } from "../utils";
