@@ -34,10 +34,12 @@ const OrderModal = ({ food, opened, onClose }: ModalProps) => {
 	);
 	const { addItem } = useContext(CartContext);
 
+	console.log('selectedOption', selectedOption);
+
 	const form = useForm<CartItemType>({
 		initialValues: {
 			quantity: selectedOption.minQuantity,
-			size: Size.medium,
+			size: selectedOption.size as Size,
 			foodId: food.id,
 			specialRequest: "",
 			totalPrice: selectedOption.price * selectedOption.minQuantity,
@@ -103,6 +105,8 @@ const OrderModal = ({ food, opened, onClose }: ModalProps) => {
 			setTotalPrice(foodOption.price * quantity);
 			form.setFieldValue("totalPrice", foodOption.price * quantity);
 			form.setFieldValue("optionPrice", foodOption.price);
+			form.setFieldValue("size", foodOption.size as Size);
+			form.setFieldValue("stripePriceId", foodOption.stripePriceId);
 		}
 	};
 
@@ -110,7 +114,7 @@ const OrderModal = ({ food, opened, onClose }: ModalProps) => {
 		if (!e.target.value) {
 			return;
 		}
-		const quantity = parseInt(e.target.value);
+		const quantity = parseInt(e.target.value, 10);
 
 		if (quantity < selectedOption.minQuantity) {
 			const newQuantity = selectedOption.minQuantity;
