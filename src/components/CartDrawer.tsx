@@ -11,23 +11,36 @@ import {
 	Text,
 } from "@mantine/core";
 import { Lock } from "lucide-react";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router";
+import { set } from "zod";
 import { AuthContext } from "../contexts/AuthContext";
 import { CartContext } from "../contexts/CartContext";
 import { centsToDollar } from "../utils";
+import { useHandleLogin } from "../utils/hooks";
 import CartItem from "./CartItem";
 
 const CartDrawer = () => {
 	const { cartOpened, setCartOpened, cartItems, getCartTotal } =
 		useContext(CartContext);
 	const [modalOpened, setModalOpened] = useState(false);
-	const { user } = useContext(AuthContext);
+	const { user, loginUser } = useContext(AuthContext);
+	const { loginWithGoogle } = useHandleLogin(loginUser);
+
+	useEffect(() => {
+		if (user) {
+			setModalOpened(false);
+		}
+	}, [user]);
 
 	const navigate = useNavigate();
 
 	const handleClose = () => {
 		setCartOpened(false);
+	};
+
+	const handleLoginWithGoogle = () => {
+		loginWithGoogle();
 	};
 
 	const handleCheckoutWithCash = () => {
@@ -112,15 +125,28 @@ const CartDrawer = () => {
 					</Container>
 				</Stack>
 			</Drawer>
-			<Modal opened={modalOpened} onClose={() => setModalOpened(false)} centered>
-					<Container>
-						<Text mb={20}>
-							Please log in or sign up to proceed to checkout.
-						</Text>
-						<Center>
-							<Button size="lg" color="var(--color-primary)" >Log in with Google</Button>
-						</Center>
-					</Container>
+			<Modal
+				opened={modalOpened}
+				onClose={() => setModalOpened(false)}
+				centered
+				classNames={{
+					header: "bg-secondary",
+					content: "bg-secondary",
+				}}
+			>
+				<Container>
+					<Text mb={20}>Please log in or sign up to proceed to checkout.</Text>
+					<Center>
+						<Button
+							size="lg"
+							color="var(--color-primary)"
+							onClick={handleLoginWithGoogle}
+							loaderProps={{ type: "dots" }}
+						>
+							Log in with Google
+						</Button>
+					</Center>
+				</Container>
 			</Modal>
 		</>
 	);

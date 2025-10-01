@@ -1,11 +1,11 @@
 import { Anchor, Avatar, Group, Indicator, Text } from "@mantine/core";
-import { type TokenResponse, useGoogleLogin } from "@react-oauth/google";
+import { type TokenResponse } from "@react-oauth/google";
 import { ShoppingCart } from "lucide-react";
 import { useContext } from "react";
 import { useLocation, useNavigate } from "react-router";
 import { AuthContext } from "../contexts/AuthContext";
 import { CartContext } from "../contexts/CartContext";
-import APIService from "../services/api";
+import { useHandleLogin } from "../utils/hooks";
 
 export type UserTokenResponse = Omit<
 	TokenResponse,
@@ -27,6 +27,7 @@ export const Header = () => {
 	const { loginUser, user, logoutUser } = useContext(AuthContext);
 	const navigate = useNavigate();
 	const location = useLocation();
+	const { loginWithGoogle } = useHandleLogin(loginUser);
 
 	const openCart = () => {
 		if (location.pathname !== "/") {
@@ -41,26 +42,7 @@ export const Header = () => {
 		clearCart();
 	};
 
-	const handleLogin = useGoogleLogin({
-		onSuccess: async ({ code }) => {
-			const API = new APIService();
-
-			try {
-				const { data } = await API.login({ code });
-				const { tokens, user } = data;
-
-				loginUser(user, tokens);
-			} catch (error) {
-				console.error(error);
-			}
-		},
-		onError: (error) => {
-			console.log("error ", error);
-		},
-		flow: "auth-code",
-	});
-
-	const onGoogleLogin = () => handleLogin();
+	const onGoogleLogin = () => loginWithGoogle();
 
 	return (
 		<header className="sticky shrink-0 top-0 p-2 bg-secondary w-full flex justify-between items-center z-10">
