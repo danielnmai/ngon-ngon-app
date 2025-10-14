@@ -19,6 +19,46 @@ import { centsToDollar } from "../utils";
 import { useHandleLogin } from "../utils/hooks";
 import CartItem from "./CartItem";
 
+type CartModalProps = {
+	opened: boolean;
+	onClose: () => void;
+	bodyText: string;
+	buttonText: string;
+	buttonAction: () => void;
+};
+
+const CartModal = ({
+	opened,
+	onClose,
+	bodyText,
+	buttonText,
+	buttonAction,
+}: CartModalProps) => (
+	<Modal
+		opened={opened}
+		onClose={onClose}
+		centered
+		classNames={{
+			header: "bg-secondary",
+			content: "bg-secondary",
+		}}
+	>
+		<Container>
+			<Text mb={20}>{bodyText}</Text>
+			<Center>
+				<Button
+					size="lg"
+					color="var(--color-primary)"
+					onClick={buttonAction}
+					loaderProps={{ type: "dots" }}
+				>
+					{buttonText}
+				</Button>
+			</Center>
+		</Container>
+	</Modal>
+);
+
 const CartDrawer = () => {
 	const { cartOpened, setCartOpened, cartItems, getCartTotal } =
 		useContext(CartContext);
@@ -124,29 +164,13 @@ const CartDrawer = () => {
 					</Container>
 				</Stack>
 			</Drawer>
-			<Modal
+			<CartModal
 				opened={modalOpened}
 				onClose={() => setModalOpened(false)}
-				centered
-				classNames={{
-					header: "bg-secondary",
-					content: "bg-secondary",
-				}}
-			>
-				<Container>
-					<Text mb={20}>Please log in or sign up to proceed to checkout.</Text>
-					<Center>
-						<Button
-							size="lg"
-							color="var(--color-primary)"
-							onClick={handleLoginWithGoogle}
-							loaderProps={{ type: "dots" }}
-						>
-							Log in with Google
-						</Button>
-					</Center>
-				</Container>
-			</Modal>
+				bodyText="Please log in or sign up to proceed to checkout."
+				buttonText="Log in with Google"
+				buttonAction={handleLoginWithGoogle}
+			/>
 		</>
 	);
 };

@@ -16,7 +16,7 @@ const Menu = () => {
 		queryFn: fetchMenu,
 	});
 
-	console.log('data', data);
+	console.log("data", data);
 
 	if (isPending) return <div>Loading...</div>;
 
