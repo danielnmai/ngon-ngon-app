@@ -4,7 +4,7 @@ import type { Food } from "../schemas/menu";
 import type { Order, OrderResponse } from "../schemas/order";
 
 class APIService {
-	BASE_URL = "http://localhost:3000/v1";
+	BASE_URL = "https://dominque-unmonumented-jenee.ngrok-free.dev/v1";
 	axiosInstance: AxiosInstance;
 
 	constructor() {
@@ -12,6 +12,7 @@ class APIService {
 			baseURL: this.BASE_URL,
 			headers: {
 				"Content-Type": "application/json",
+				"ngrok-skip-browser-warning": "true",
 			},
 		});
 
