@@ -46,9 +46,9 @@ export const Header = () => {
 
 	return (
 		<header className="sticky shrink-0 top-0 p-2 bg-secondary w-full flex justify-between items-center z-10">
-			<Text className="ml-4 cursor-pointer" onClick={() => navigate("/")}>
-				Ngon Ngon
-			</Text>
+			<div className="ml-4 cursor-pointer" onClick={() => navigate("/")}>
+				<img src="/assets/ngon-ngon-logo.png" alt="Ngon Ngon Logo" className="w-48 m-0 p-0" />
+			</div>
 			<Group className="mr-4">
 				<Anchor variant="outline" href="#menu" className="no-underline mr-4">
 					<Text className="text-primary hover:bg-primary hover:text-white px-2 py-1 rounded-sm border-1">
