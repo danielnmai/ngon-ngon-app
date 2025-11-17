@@ -5,6 +5,7 @@ import type { Order, OrderResponse } from "../schemas/order";
 
 class APIService {
 	BASE_URL = "https://dominque-unmonumented-jenee.ngrok-free.dev/v1";
+	// BASE_URL = "http://localhost:3000/v1";
 	axiosInstance: AxiosInstance;
 
 	constructor() {

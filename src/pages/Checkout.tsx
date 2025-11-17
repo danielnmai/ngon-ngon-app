@@ -26,7 +26,10 @@ const Checkout = () => {
 	}) => {
 		const { data } = await API.updateOrder({ id: orderId, paymentStatus });
 		setOrder(data);
-		clearCart();
+
+		if(paymentStatus === "SUCCESS") {
+			clearCart();
+		}
 
 		return data;
 	};
