@@ -45,10 +45,7 @@ function App() {
 										<Routes>
 											<Route index element={<Home />} />
 											<Route path="checkout" element={<Checkout />} />
-											<Route
-												path="cart"
-												element={<Cart paymentType="CASH" />}
-											/>
+											<Route path="cart" element={<Cart />} />
 										</Routes>
 									</div>
 									<Footer />

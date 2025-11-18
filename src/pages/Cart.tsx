@@ -8,7 +8,6 @@ import {
 	Text,
 } from "@mantine/core";
 import { useMutation } from "@tanstack/react-query";
-import { Lock } from "lucide-react";
 import { useContext } from "react";
 import CartItem from "../components/CartItem";
 import { AuthContext } from "../contexts/AuthContext";
@@ -16,6 +15,7 @@ import { CartContext } from "../contexts/CartContext";
 import type { Order } from "../schemas/order";
 import APIService from "../services/api";
 import { centsToDollar } from "../utils";
+import { PickupInstructions } from "../components/OrderResult";
 
 const Cart = () => {
 	const { cartItems, getCartTotal } = useContext(CartContext);
@@ -90,26 +90,29 @@ const Cart = () => {
 									{centsToDollar(total)}
 								</Text>
 							</Group>
-								<Button
-									w="100%"
-									size="lg"
-									color="var(--color-primary)"
-									onClick={() => handleCashCheckout()}
-									loading={isPending}
-									component="a"
-									href="tel:916-467-4047"
+							<PickupInstructions title="Pick-up Instructions for Cash Payment" />
+							<Button
+								w="100%"
+								size="lg"
+								color="var(--color-primary)"
+								onClick={() => handleCashCheckout()}
+								loading={isPending}
+								component="a"
+								href="tel:916-467-4047"
+							>
+								Pay with Cash
+							</Button>
+							<Button
+								w="100%"
+								size="lg"
+								color="var(--color-primary)"
+								variant="outline"
+								className="hover:bg-primary hover:text-white"
+								onClick={() => handleCardCheckout()}
+								loading={isPending}
 								>
-									Pay with Cash
-								</Button>
-								<Button
-									w="100%"
-									size="lg"
-									color="var(--color-primary)"
-									onClick={() => handleCardCheckout()}
-									loading={isPending}
-									>
-									Pay with Stripe
-								</Button>
+								Pay with Card
+							</Button>
 						</Stack>
 					</Stack>
 				</Container>

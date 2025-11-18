@@ -56,14 +56,14 @@ const Checkout = () => {
 		return (
 			<>
 				<OrderResult success="false" order={order} />
-				<Cart paymentType={paymentType} />
+				<Cart />
 			</>
 		);
 	}
 
 	return (
 		<>
-			<Cart paymentType={paymentType} />
+			<Cart />
 			{paymentType === "CASH" && (
 				<PickupInstructions title="Pick-up Instructions for Cash Payment" />
 			)}
