@@ -17,13 +17,7 @@ import type { Order } from "../schemas/order";
 import APIService from "../services/api";
 import { centsToDollar } from "../utils";
 
-type PaymentType = "CARD" | "CASH";
-
-type CartProps = {
-	paymentType: PaymentType;
-};
-
-const Cart = ({ paymentType }: CartProps) => {
+const Cart = () => {
 	const { cartItems, getCartTotal } = useContext(CartContext);
 	const { user } = useContext(AuthContext);
 	const API = new APIService();
@@ -96,23 +90,6 @@ const Cart = ({ paymentType }: CartProps) => {
 									{centsToDollar(total)}
 								</Text>
 							</Group>
-							{paymentType === "CARD" ? (
-								<>
-									<Button
-										w="100%"
-										size="lg"
-										color="var(--color-primary)"
-										onClick={() => handleCardCheckout()}
-										loading={isPending}
-									>
-										Checkout
-									</Button>
-									<Group>
-										<Lock />
-										<Text>Secure checkout with Stripe</Text>
-									</Group>
-								</>
-							) : (
 								<Button
 									w="100%"
 									size="lg"
@@ -122,9 +99,17 @@ const Cart = ({ paymentType }: CartProps) => {
 									component="a"
 									href="tel:916-467-4047"
 								>
-									Call (916) 467-4047 to Order
+									Pay with Cash
 								</Button>
-							)}
+								<Button
+									w="100%"
+									size="lg"
+									color="var(--color-primary)"
+									onClick={() => handleCardCheckout()}
+									loading={isPending}
+									>
+									Pay with Stripe
+								</Button>
 						</Stack>
 					</Stack>
 				</Container>
