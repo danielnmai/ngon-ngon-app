@@ -1,7 +1,7 @@
 import { useMutation } from "@tanstack/react-query";
 import { useContext, useEffect, useState } from "react";
 import { useSearchParams } from "react-router";
-import OrderResult, { PickupInstructions } from "../components/OrderResult";
+import OrderResult from "../components/OrderResult";
 import { CartContext } from "../contexts/CartContext";
 import Cart from "../pages//Cart";
 import type { OrderResponse, PaymentStatus } from "../schemas/order";
