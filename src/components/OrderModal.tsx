@@ -33,9 +33,7 @@ const OrderModal = ({ food, opened, onClose }: ModalProps) => {
 		food.options[0],
 	);
 	const { addItem } = useContext(CartContext);
-
-	console.log("selectedOption", selectedOption);
-
+	
 	const form = useForm<CartItemType>({
 		initialValues: {
 			quantity: selectedOption.minQuantity,
