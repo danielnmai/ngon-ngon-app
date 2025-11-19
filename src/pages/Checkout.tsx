@@ -1,6 +1,6 @@
 import { useMutation } from "@tanstack/react-query";
 import { useContext, useEffect, useState } from "react";
-import { useLocation, useSearchParams } from "react-router";
+import { useSearchParams } from "react-router";
 import OrderResult, { PickupInstructions } from "../components/OrderResult";
 import { CartContext } from "../contexts/CartContext";
 import Cart from "../pages//Cart";
@@ -9,12 +9,10 @@ import APIService from "../services/api";
 
 const Checkout = () => {
 	const [searchParams] = useSearchParams();
-	const location = useLocation();
 	const success = searchParams.get("success");
 	const orderId = searchParams.get("orderId");
 	const [order, setOrder] = useState<OrderResponse | null>(null);
 	const API = new APIService();
-	const paymentType = location.state?.paymentType || "CARD";
 	const { clearCart } = useContext(CartContext);
 
 	const updateOrder = async ({
@@ -27,7 +25,7 @@ const Checkout = () => {
 		const { data } = await API.updateOrder({ id: orderId, paymentStatus });
 		setOrder(data);
 
-		if(paymentStatus === "SUCCESS") {
+		if (paymentStatus === "SUCCESS") {
 			clearCart();
 		}
 
@@ -61,14 +59,7 @@ const Checkout = () => {
 		);
 	}
 
-	return (
-		<>
-			<Cart />
-			{paymentType === "CASH" && (
-				<PickupInstructions title="Pick-up Instructions for Cash Payment" />
-			)}
-		</>
-	);
+	return <Cart />;
 };
 
 export default Checkout;

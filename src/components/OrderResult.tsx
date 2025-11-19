@@ -41,6 +41,7 @@ export const PickupInstructions = ({ title }: { title: string }) => {
 		</Container>
 	);
 };
+
 const OrderResult = ({ success, order }: OrderResultProps) => {
 	if (!success || !order) return null;
 

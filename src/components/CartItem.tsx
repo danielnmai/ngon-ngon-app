@@ -49,7 +49,7 @@ const CartItem = ({ item }: CartItemProps) => {
 
 	return (
 		<Group className="h-fit w-full flex-nowrap justify-between my-2">
-			<Image src={item.photo} w={120} h={120} radius="sm" />
+			<Image src={item.photo} h={120} radius="sm" miw={120} />
 			<Group
 				ref={ref}
 				className={`w-full items-start

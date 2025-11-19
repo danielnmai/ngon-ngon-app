@@ -38,14 +38,12 @@ const Cart = () => {
 	});
 
 	const handleCardCheckout = () => {
-		if (!user) return;
-
 		const order: Order = {
 			lineItems: cartItems,
 			total,
 			paymentType: "STRIPE",
 			description: "Order from Ngon Ngon",
-			userId: user.id,
+			userId: user ? user.id : undefined,
 		};
 
 		mutate(order);
@@ -90,13 +88,11 @@ const Cart = () => {
 									{centsToDollar(total)}
 								</Text>
 							</Group>
-							<PickupInstructions title="Pick-up Instructions for Cash Payment" />
 							<Button
 								w="100%"
 								size="lg"
 								color="var(--color-primary)"
 								onClick={() => handleCashCheckout()}
-								loading={isPending}
 								component="a"
 								href="tel:916-467-4047"
 							>
@@ -113,6 +109,7 @@ const Cart = () => {
 								>
 								Pay with Card
 							</Button>
+							<PickupInstructions title="Pick-up Instructions" />
 						</Stack>
 					</Stack>
 				</Container>
