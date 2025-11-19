@@ -91,6 +91,7 @@ const Cart = () => {
 							<Button
 								w="100%"
 								size="lg"
+								disabled={total === 0}
 								color="var(--color-primary)"
 								onClick={() => handleCashCheckout()}
 								component="a"
@@ -101,6 +102,7 @@ const Cart = () => {
 							<Button
 								w="100%"
 								size="lg"
+								disabled={total === 0}
 								color="var(--color-primary)"
 								variant="outline"
 								className="hover:bg-primary hover:text-white"
