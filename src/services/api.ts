@@ -8,6 +8,7 @@ class APIService {
 	axiosInstance: AxiosInstance;
 
 	constructor() {
+		console.log('env var', import.meta.env)
 		this.axiosInstance = axios.create({
 			baseURL: this.BASE_URL,
 			headers: {
