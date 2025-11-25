@@ -6,7 +6,7 @@ export const Footer = () => {
 		<footer className="shrink-0 p-2 bg-secondary">
 			<Group className="flex justify-center items-center h-full">
 				<Copyright />
-				<Text>2025 by Nghia Mai. All Rights Reserved</Text>
+				<Text>2025 by Daniel Mai. All Rights Reserved</Text>
 			</Group>
 		</footer>
 	);
