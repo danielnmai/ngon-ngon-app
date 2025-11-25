@@ -5,11 +5,9 @@ import type { Order, OrderResponse } from "../schemas/order";
 
 class APIService {
 	BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:3000/v1";
-	// BASE_URL = 'https://dominque-unmonumented-jenee.ngrok-free.dev/v1';
 	axiosInstance: AxiosInstance;
 
 	constructor() {
-		console.log('env var', import.meta.env)
 		this.axiosInstance = axios.create({
 			baseURL: this.BASE_URL,
 			headers: {

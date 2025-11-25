@@ -20,7 +20,7 @@ const useHandleLogin = (
 			}
 		},
 		onError: (error) => {
-			console.log("error ", error);
+			console.error(error);
 		},
 		flow: "auth-code",
 	});

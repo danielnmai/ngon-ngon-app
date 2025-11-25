@@ -10,12 +10,12 @@ import {
 import { useMutation } from "@tanstack/react-query";
 import { useContext } from "react";
 import CartItem from "../components/CartItem";
+import { PickupInstructions } from "../components/OrderResult";
 import { AuthContext } from "../contexts/AuthContext";
 import { CartContext } from "../contexts/CartContext";
 import type { Order } from "../schemas/order";
 import APIService from "../services/api";
 import { centsToDollar } from "../utils";
-import { PickupInstructions } from "../components/OrderResult";
 
 const Cart = () => {
 	const { cartItems, getCartTotal } = useContext(CartContext);
@@ -108,7 +108,7 @@ const Cart = () => {
 								className="hover:bg-primary hover:text-white"
 								onClick={() => handleCardCheckout()}
 								loading={isPending}
-								>
+							>
 								Pay with Card
 							</Button>
 							<PickupInstructions title="Pick-up Instructions" />
